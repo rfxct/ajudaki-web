@@ -6,6 +6,7 @@ import { Container } from "reactstrap";
 // import AdminNavbar from "../components/Navbars/AdminNavbar.js";
 // import AdminFooter from "../components/Footers/AdminFooter.js";
 import Sidebar from "../components/Sidebar";
+import Navbar from "../components/Navbar";
 
 import routes from "../routes.js";
 
@@ -37,12 +38,11 @@ function Admin(props) {
           imgAlt: "...",
         }}
       />
-      <div className="main-content" ref={mainContentRef}>
+      <div className="main-content h-100" ref={mainContentRef}>
+
+        <Navbar {...props} brandText={getBrandText()} />
         {/* <AdminNavbar {...props} brandText={getBrandText()} /> */}
         {props.children}
-        <Container fluid>
-          {/* <AdminFooter /> */}
-        </Container>
       </div>
     </>
   );

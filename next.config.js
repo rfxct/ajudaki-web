@@ -2,6 +2,9 @@ const path = require('path')
 
 module.exports = {
   reactStrictMode: true,
+  images: {
+    domains: ['avatars.dicebear.com', 'meetanentrepreneur.lu'],
+  },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },

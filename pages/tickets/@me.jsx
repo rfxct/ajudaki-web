@@ -1,6 +1,7 @@
 import { Dashboard } from '../../layouts'
 import Header from '../../components/Header'
 
+import Image from 'next/image'
 import {
     Badge,
     Card,
@@ -55,27 +56,29 @@ export default function MeusTickets() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {rows.map(r => (
-                                        <tr>
+                                    {rows.map((r, i) => (
+                                        <tr key={1 + i}>
                                             {/* Avatar */}
                                             <th scope="row">
                                                 <Media className="align-items-center">
                                                     <a
                                                         className="avatar rounded-circle mr-3"
-                                                        href="#"
+                                                        href={`ticket/${1 + i}`}
                                                         onClick={(e) => e.preventDefault()}
                                                     >
-                                                        <img
+                                                        <Image
                                                             alt={r.helper}
+                                                            width='48px'
+                                                            height='48px'
                                                             src={r?.avatar || `https://avatars.dicebear.com/v2/initials/${
                                                                 r.helper.split(' ').join('-')
                                                             }.svg`}
                                                         />
                                                     </a>
                                                     <Media>
-                                                        <span className="mb-0 text-sm">
+                                                        <a style={{cursor: 'pointer'}}className="mb-0 text-sm">
                                                             {r.subject}
-                                                        </span>
+                                                        </a>
                                                     </Media>
                                                 </Media>
                                             </th>

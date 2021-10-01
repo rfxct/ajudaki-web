@@ -63,22 +63,26 @@ function AdminNavbar({ brandText }) {
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>
                 <Link href="/perfil/@me">
-                  <a className="dropdown-item">
-                    <FaUser />
-                    <span>Meu perfil</span>
+                  <a>
+                    <DropdownItem>
+                      <FaUser />
+                      <span>Meu perfil</span>
+                    </DropdownItem>
                   </a>
                 </Link>
                 <Link href="/tickets/@me">
-                  <a className="dropdown-item">
-                    <FaTicketAlt />
-                    <a>Meus tickets</a>
+                  <a>
+                    <DropdownItem>
+                      <FaTicketAlt />
+                      <a>Meus tickets</a>
+                    </DropdownItem>
                   </a>
                 </Link>
                 <DropdownItem divider />
-                <a className="dropdown-item" href="#" onClick={(e) => e.preventDefault()}>
+                <DropdownItem href="#" onClick={(e) => e.preventDefault()}>
                   <FaSignOutAlt />
                   <span>Logout</span>
-                </a>
+                </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

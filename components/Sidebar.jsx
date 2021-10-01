@@ -1,10 +1,11 @@
+import { useState } from 'react'
+import { useRouter } from 'next/router'
+
+import Link from 'next/link'
+import Image from 'next/image'
+
 import {
   Collapse,
-  Form,
-  Input,
-  InputGroupAddon,
-  InputGroupText,
-  InputGroup,
   NavbarBrand,
   Navbar,
   NavItem,
@@ -15,15 +16,12 @@ import {
   Col,
 } from 'reactstrap'
 
-import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
 import routes from '../routes'
 
 export default function SidebarComponent({ logo }) {
   const router = useRouter()
   const [collapsed, setCollapsed] = useState(false)
-  
+
   const closeCollapse = () => setCollapsed(false)
   const toggleCollapsed = () => setCollapsed(!collapsed)
 
@@ -49,7 +47,7 @@ export default function SidebarComponent({ logo }) {
 
         {/* Sidebar Logo */}
         <NavbarBrand href="#" className="pt-0">
-          <img className="navbar-brand-img" src={logo.src} width="120px" />
+          <Image className="navbar-brand-img" alt='...' src={logo.src} width="128px" height="40px" />
         </NavbarBrand>
 
         {/* Sidebar */}
@@ -60,7 +58,7 @@ export default function SidebarComponent({ logo }) {
               {/* Collapsed Logo */}
               <Col className="collapse-brand" xs="6">
                 <Link href="/">
-                  <img src={logo.src} />
+                  <a><Image src={logo.src} width="128px" height="40px" alt='...' /></a>
                 </Link>
               </Col>
 
@@ -81,6 +79,7 @@ export default function SidebarComponent({ logo }) {
             {routes.map((route, key) => (
               <NavItem key={key} active={isActive(route)}>
                 <Link href={route.fullPath}>
+                  <a>
                   <NavLink
                     href="#"
                     active={isActive(route)}
@@ -91,6 +90,7 @@ export default function SidebarComponent({ logo }) {
                     </NavItemIcon>
                     {route.name}
                   </NavLink>
+                  </a>
                 </Link>
               </NavItem>
             ))}</Nav>

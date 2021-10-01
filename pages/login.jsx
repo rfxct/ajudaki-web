@@ -78,7 +78,7 @@ export default function Login() {
               <Col xs='6'>
                 <a
                   className='text-light'
-                  href='#pablo'
+                  href='#'
                   onClick={(e) => e.preventDefault()}
                 >
                   <small>Esqueceu a senha?</small>
@@ -87,7 +87,7 @@ export default function Login() {
               <Col className='text-right' xs='6'>
                 <a
                   className='text-light'
-                  href='#pablo'
+                  href='#'
                   onClick={(e) => e.preventDefault()}
                 >
                   <small>Criar nova conta</small>

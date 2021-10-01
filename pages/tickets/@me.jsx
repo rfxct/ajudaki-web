@@ -1,5 +1,4 @@
 import { Dashboard } from '../../layouts'
-import Header from '../../components/Header'
 
 import Image from 'next/image'
 import {
@@ -52,6 +51,7 @@ export default function MeusTickets() {
                     <th scope="col">Criado</th>
                     <th scope="col">Atualizado</th>
                     <th scope="col">Status</th>
+                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -90,6 +90,28 @@ export default function MeusTickets() {
                           {r.status}
                         </Badge>
                       </td>
+                      <td className="text-right">
+                        <UncontrolledDropdown>
+                          <DropdownToggle
+                            className="btn-icon-only text-light"
+                            href="#"
+                            role="button"
+                            size="sm"
+                            color=""
+                            onClick={(e) => e.preventDefault()}
+                          >
+                            <i className="fas fa-ellipsis-v" />
+                          </DropdownToggle>
+                          <DropdownMenu className="dropdown-menu-arrow" right>
+                            <DropdownItem
+                              href="#"
+                              onClick={(e) => e.preventDefault()}
+                            >
+                              Deletar
+                            </DropdownItem>
+                          </DropdownMenu>
+                        </UncontrolledDropdown>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -102,7 +124,7 @@ export default function MeusTickets() {
                   >
                     <PaginationItem className="disabled">
                       <PaginationLink
-                        href="#pablo"
+                        href="#"
                         onClick={(e) => e.preventDefault()}
                         tabIndex="-1"
                       >
@@ -112,7 +134,7 @@ export default function MeusTickets() {
                     </PaginationItem>
                     <PaginationItem className="active">
                       <PaginationLink
-                        href="#pablo"
+                        href="#"
                         onClick={(e) => e.preventDefault()}
                       >
                         1
@@ -120,7 +142,7 @@ export default function MeusTickets() {
                     </PaginationItem>
                     <PaginationItem>
                       <PaginationLink
-                        href="#pablo"
+                        href="#"
                         onClick={(e) => e.preventDefault()}
                       >
                         2 <span className="sr-only">(current)</span>
@@ -128,7 +150,7 @@ export default function MeusTickets() {
                     </PaginationItem>
                     <PaginationItem>
                       <PaginationLink
-                        href="#pablo"
+                        href="#"
                         onClick={(e) => e.preventDefault()}
                       >
                         3
@@ -136,7 +158,7 @@ export default function MeusTickets() {
                     </PaginationItem>
                     <PaginationItem>
                       <PaginationLink
-                        href="#pablo"
+                        href="#"
                         onClick={(e) => e.preventDefault()}
                       >
                         <i className="fas fa-angle-right" />
@@ -153,39 +175,3 @@ export default function MeusTickets() {
     </Dashboard>
   );
 }
-
-// Row Dropdown
-{/* <td className="text-right">
-    <UncontrolledDropdown>
-        <DropdownToggle
-            className="btn-icon-only text-light"
-            href="#pablo"
-            role="button"
-            size="sm"
-            color=""
-            onClick={(e) => e.preventDefault()}
-        >
-            <i className="fas fa-ellipsis-v" />
-        </DropdownToggle>
-        <DropdownMenu className="dropdown-menu-arrow" right>
-            <DropdownItem
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-            >
-                Action
-            </DropdownItem>
-            <DropdownItem
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-            >
-                Another action
-            </DropdownItem>
-            <DropdownItem
-                href="#pablo"
-                onClick={(e) => e.preventDefault()}
-            >
-                Something else here
-            </DropdownItem>
-        </DropdownMenu>
-    </UncontrolledDropdown>
-</td> */}

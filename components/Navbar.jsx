@@ -74,7 +74,7 @@ function AdminNavbar({ brandText }) {
                   <a>
                     <DropdownItem>
                       <FaTicketAlt />
-                      <a>Meus tickets</a>
+                      <span>Meus tickets</span>
                     </DropdownItem>
                   </a>
                 </Link>

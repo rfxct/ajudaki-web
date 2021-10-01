@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/link-passhref */
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
@@ -79,7 +80,6 @@ export default function SidebarComponent({ logo }) {
             {routes.map((route, key) => (
               <NavItem key={key} active={isActive(route)}>
                 <Link href={route.fullPath}>
-                  <a>
                   <NavLink
                     href="#"
                     active={isActive(route)}
@@ -90,7 +90,6 @@ export default function SidebarComponent({ logo }) {
                     </NavItemIcon>
                     {route.name}
                   </NavLink>
-                  </a>
                 </Link>
               </NavItem>
             ))}</Nav>

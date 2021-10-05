@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { useRouter } from 'next/router'
 
-import Sidebar from '../components/Sidebar'
 import Navbar from '../components/Navbar'
 
 import routes from '../routes.js'
 
-function Admin(props) {
+export default function Common(props) {
   const router = useRouter()
   const mainContentRef = useRef()
 
@@ -19,21 +18,9 @@ function Admin(props) {
   const getBrandText = () => routes.find(r => r.layout + r.path === router.route)?.name ?? 'AjudAki'
 
   return (
-    <>
-      <Sidebar
-        {...props}
-        routes={routes}
-        logo={{
-          innerLink: '/admin/index',
-          src: '/img/brand/logo.png',
-        }}
-      />
-      <div className='main-content' ref={mainContentRef}>
-        <Navbar {...props} brandText={getBrandText()} />
-        {props.children}
-      </div>
-    </>
+    <div className='main-content' ref={mainContentRef}>
+      <Navbar {...props} brandText={getBrandText()} />
+      {props.children}
+    </div>
   )
 }
-
-export default Admin

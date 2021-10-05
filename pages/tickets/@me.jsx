@@ -1,4 +1,5 @@
 import { Dashboard } from '../../layouts'
+import { Long } from '../../util/DateUtil'
 
 import Image from 'next/image'
 import {
@@ -22,7 +23,6 @@ import {
 } from 'reactstrap';
 
 export default function MeusTickets() {
-  const INTL = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', timeStyle: 'short', dateStyle: 'medium' })
   const rows = [{
     subject: 'Lorem ipsum dolor sit amet.', helper: 'Marcos', createdAt: Date.now() - 8.64e+7,
     updatedAt: Date.now(), status: 'pendente', color: 'warning'
@@ -82,8 +82,8 @@ export default function MeusTickets() {
                       </th>
                       {/* Content */}
                       <td data-label="Ajudante">{r.helper}</td>
-                      <td data-label="Criado">{INTL.format(r.createdAt)}</td>
-                      <td data-label="Atualizado">{INTL.format(r.updatedAt)}</td>
+                      <td data-label="Criado">{Long.format(r.createdAt)}</td>
+                      <td data-label="Atualizado">{Long.format(r.updatedAt)}</td>
                       <td data-label="Status">
                         <Badge color="" className="badge-dot mr-4">
                           <i className={`bg-${r.color}`} />

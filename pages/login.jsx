@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import {
   Button,
@@ -28,7 +29,7 @@ export default function Login() {
             <Card className='bg-secondary shadow border-0'>
               <CardHeader className='bg-transparent pb-1'>
                 <div className="d-flex justify-content-center">
-                  <img src="img/brand/logo.png" loading="lazy" width='50%' />
+                  <Image src="img/brand/logo.png" loading="lazy" alt="AjudAki" width='50%' />
                 </div>
                 <div className='text-muted text-center mt-2 mb-3'>
                   <small>Conecte-se</small>
@@ -66,9 +67,11 @@ export default function Login() {
                   </FormGroup>
                   <div className='text-center'>
                     <Link href="/tickets/@me">
-                      <Button className='my-4' color='primary' type='button'>
-                        Conectar
-                      </Button>
+                      <a>
+                        <Button className='my-4' color='primary' type='button'>
+                          Conectar
+                        </Button>
+                      </a>
                     </Link>
                   </div>
                 </Form>

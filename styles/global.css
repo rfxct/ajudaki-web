@@ -19,6 +19,12 @@ a {
   box-sizing: border-box;
 }
 
+@media screen and (min-width: 1281px) {
+  .main-content {
+    height: 100% !important;
+  }
+}
+
 @media screen and (max-width: 1281px) {
   tr {
     display: flex !important;
@@ -32,7 +38,7 @@ a {
 
   tr {
     box-shadow: 0 2px 3px rgba(10, 10, 10, .1), 0 0 0 1px rgb(10, 10, 10, .1);
-    margin-bottom: 16px;
+    /* margin-bottom: 16px; */
   }
 
   tr:not(.detail):not(.is-empty):not(.table-footer) td:before {

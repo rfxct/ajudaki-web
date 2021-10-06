@@ -19,6 +19,10 @@ a {
   box-sizing: border-box;
 }
 
+.main-content {
+  min-height: 100vh;
+}
+
 @media screen and (min-width: 1281px) {
   .main-content {
     height: 100% !important;

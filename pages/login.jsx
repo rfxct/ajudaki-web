@@ -66,7 +66,7 @@ export default function Login() {
                     </InputGroup>
                   </FormGroup>
                   <div className='text-center'>
-                    <Link href="/tickets/@me">
+                    <Link href="/tickets/novo">
                       <a>
                         <Button className='my-4' color='primary' type='button'>
                           Conectar

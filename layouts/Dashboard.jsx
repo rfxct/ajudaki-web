@@ -28,7 +28,7 @@ function Admin(props) {
           src: '/img/brand/logo.png',
         }}
       />
-      <div className='main-content' ref={mainContentRef}>
+      <div className='main-content bg-gradient-dark' ref={mainContentRef}>
         <Navbar {...props} brandText={props.brandText ?? getBrandText()} />
         {props.children}
       </div>

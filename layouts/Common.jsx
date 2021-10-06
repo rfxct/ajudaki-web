@@ -18,7 +18,7 @@ export default function Common(props) {
   const getBrandText = () => routes.find(r => r.layout + r.path === router.route)?.name ?? 'AjudAki'
 
   return (
-    <div className='main-content' ref={mainContentRef}>
+    <div className='main-content bg-gradient-dark' ref={mainContentRef}>
       <Navbar {...props} brandText={getBrandText()} />
       {props.children}
     </div>

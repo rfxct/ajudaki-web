@@ -17,7 +17,7 @@ export default function Ticket({ }) {
 
   return (
     <Dashboard brandText={`Ticket #${ticket_id}`}>
-      <Container className="bg-gradient-dark h-100 pb-8 pt-5 pt-md-8" fluid>
+      <Container className="pb-8 pt-5 pt-md-8" fluid>
         <h1 className="text-light">{ticketData?.subject || 'Ticket não encontrado'}</h1>
 
         {ticketData && ticketData.timeline.sort((a, b) => b.createdAt - a.createdAt).map((topic, i) => (

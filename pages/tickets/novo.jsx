@@ -24,7 +24,7 @@ export default function MeusTickets() {
   return (
     <Dashboard>
       {/* Page content */}
-      <Container className="bg-gradient-dark h-100 pb-8 pt-5 pt-md-8" fluid>
+      <Container className="pb-8 pt-5 pt-md-8" fluid>
         {/* Table */}
         <Row>
           <div className="col">

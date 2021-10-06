@@ -2,6 +2,8 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 
+import Brand from '../components/Brand'
+
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -47,8 +49,8 @@ export default function SidebarComponent({ logo }) {
         </button>
 
         {/* Sidebar Logo */}
-        <NavbarBrand href="#" className="pt-0">
-          <Image className="navbar-brand-img" alt='...' src={logo.src} width="128px" height="40px" />
+        <NavbarBrand href="#" className="p-0">
+          <Brand />
         </NavbarBrand>
 
         {/* Sidebar */}
@@ -59,7 +61,7 @@ export default function SidebarComponent({ logo }) {
               {/* Collapsed Logo */}
               <Col className="collapse-brand" xs="6">
                 <Link href="/">
-                  <a><Image src={logo.src} width="128px" height="40px" alt='...' /></a>
+                  <a><Brand /></a>
                 </Link>
               </Col>
 

@@ -1,7 +1,10 @@
 import { Dashboard } from '../../layouts'
 import { Long } from '../../util/DateUtil'
+import { useLocalStorage } from '../../hooks'
 
+import Link from 'next/link'
 import Image from 'next/image'
+
 import {
   Badge,
   Card,
@@ -23,15 +26,8 @@ import {
 } from 'reactstrap';
 
 export default function MeusTickets() {
-  const rows = [{
-    subject: 'Lorem ipsum dolor sit amet.', helper: 'Marcos', createdAt: Date.now() - 8.64e+7,
-    updatedAt: Date.now(), status: 'pendente', color: 'warning'
-  }, {
-    avatar: 'https://meetanentrepreneur.lu/wp-content/uploads/2019/08/profil-linkedin.jpg',
-    subject: 'Lorem ipsum dolor sit amet.', helper: 'Lucas', createdAt: Date.now() - 8.64e+7,
-    updatedAt: Date.now(), status: 'resolvido', color: 'success'
-  }]
-
+  const [tickets, setTickets] = useLocalStorage('tickets', [])
+  
   return (
     <Dashboard>
       {/* Page content */}
@@ -55,35 +51,35 @@ export default function MeusTickets() {
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((r, i) => (
+                  {tickets.map((r, i) => (
                     <tr key={1 + i}>
                       {/* Avatar */}
                       <th scope="row">
                         <Media className="align-items-center">
-                          <a
-                            className="avatar rounded-circle mr-3"
-                            href={`/tickets/${1 + i}`}
+                          <Image
+                            className="rounded-circle"
+                            alt={r.helper}
+                            width='48px'
+                            height='48px'
+                            src={r?.avatar || `https://avatars.dicebear.com/v2/initials/${r.helper.split(' ').join('-')
+                              }.svg`}
+                          />
+                          <Link
+                            href={`/tickets/${r.id}`}
                             onClick={(e) => e.preventDefault()}
                           >
-                            <Image
-                              alt={r.helper}
-                              width='48px'
-                              height='48px'
-                              src={r?.avatar || `https://avatars.dicebear.com/v2/initials/${r.helper.split(' ').join('-')
-                                }.svg`}
-                            />
-                          </a>
-                          <Media>
-                            <a style={{ cursor: 'pointer' }} href={`/tickets/${1 + i}`} className="mb-0 text-sm">
-                              {r.subject}
+                            <a className="ml-3">
+                              <span style={{ cursor: 'pointer' }} className="mb-0 text-sm">
+                                {r.subject}
+                              </span>
                             </a>
-                          </Media>
+                          </Link>
                         </Media>
                       </th>
                       {/* Content */}
-                      <td data-label="Ajudante">{r.helper}</td>
+                      <td data-label="Ajudante"> {r.helper}</td>
                       <td data-label="Criado">{Long.format(r.createdAt)}</td>
-                      <td data-label="Atualizado">{Long.format(r.updatedAt)}</td>
+                      <td data-label="Atualizado">{!r.updatedAt ? '---' : Long.format(r.updatedAt)}</td>
                       <td data-label="Status">
                         <Badge color="" className="badge-dot mr-4">
                           <i className={`bg-${r.color}`} />
@@ -105,7 +101,10 @@ export default function MeusTickets() {
                           <DropdownMenu className="dropdown-menu-arrow" right>
                             <DropdownItem
                               href="#"
-                              onClick={(e) => e.preventDefault()}
+                              data-parent={r.id}
+                              onClick={(e) => {
+                                setTickets(tickets.filter(t => t.id != e.target.dataset.parent))
+                              }}
                             >
                               Deletar
                             </DropdownItem>
@@ -129,7 +128,7 @@ export default function MeusTickets() {
                         tabIndex="-1"
                       >
                         <i className="fas fa-angle-left" />
-                        <span className="sr-only">Previous</span>
+                        <span className="sr-only">Anterior</span>
                       </PaginationLink>
                     </PaginationItem>
                     <PaginationItem className="active">
@@ -140,29 +139,13 @@ export default function MeusTickets() {
                         1
                       </PaginationLink>
                     </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        2 <span className="sr-only">(current)</span>
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
-                      <PaginationLink
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        3
-                      </PaginationLink>
-                    </PaginationItem>
-                    <PaginationItem>
+                    <PaginationItem className="disabled">
                       <PaginationLink
                         href="#"
                         onClick={(e) => e.preventDefault()}
                       >
                         <i className="fas fa-angle-right" />
-                        <span className="sr-only">Next</span>
+                        <span className="sr-only">Próximo</span>
                       </PaginationLink>
                     </PaginationItem>
                   </Pagination>
@@ -171,7 +154,7 @@ export default function MeusTickets() {
             </Card>
           </div>
         </Row>
-      </Container>
-    </Dashboard>
+      </Container >
+    </Dashboard >
   );
 }

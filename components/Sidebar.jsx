@@ -79,9 +79,9 @@ export default function SidebarComponent({ logo }) {
           <Nav navbar>
             {routes.map((route, key) => (
               <NavItem key={key} active={isActive(route)}>
-                <Link href={route.fullPath}>
+                <Link href={isActive(route) ? '#' : route.fullPath}>
                   <NavLink
-                    href="#"
+                    href={isActive(route) ? '#' : route.fullPath}
                     active={isActive(route)}
                     onClick={closeCollapse}
                   >

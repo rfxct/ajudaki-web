@@ -1,56 +1,85 @@
-import Navbar from '../../components/Navbar'
-import Sidebar from '../../components/Sidebar'
+import { useRef } from 'react'
+import { useRouter } from 'next/router'
 
-export default function NovoTicket() {
-    return (
-        <div id="app" className="has-aside-left has-aside-mobile-transition has-navbar-fixed-top has-aside-expanded">
-            <Sidebar />
-            <Navbar />
+import { Dashboard } from '../../layouts'
+import { useLocalStorage } from '../../hooks'
 
-            {/* Content */}
-            <section className="section is-main-section">
-                <div className="card">
-                    <header className="card-header">
-                        <p className="card-header-title">
-                            <span className="icon"><i className="mdi mdi-help-circle default"></i></span> Enviar Ticket
-                        </p>
-                    </header>
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Container,
+  Row,
+  FormGroup,
+  Form,
+  Input,
+  Button
+} from 'reactstrap';
 
-                    <div className="card-content">
-                        <form method="get" action="#">
-                            <div className="field">
-                                <label className="label">Título <span style={{ color: 'red' }}>*</span></label>
-                                <div className="control">
-                                    <input className="input" type="text" placeholder="Insira o título" required />
-                                </div>
-                                <span className="help"><span style={{ color: 'red' }}>*</span> campo obrigatório</span>
-                            </div>
+export default function MeusTickets() {
+  const router = useRouter()
 
-                            <div className="field">
-                                <label className="label">Descrição <span style={{ color: 'red' }}>*</span></label>
-                                <div className="control">
-                                    <textarea className="textarea" placeholder="Descreva melhor o seu problema" required></textarea>
-                                </div>
-                                <span className="help"><span style={{ color: 'red' }}>*</span> campo obrigatório</span>
-                            </div>
+  const [tickets, setTickets] = useLocalStorage('tickets', [])
 
-                            <div className="field">
-                                <label className="label">Anexos</label>
-                                <div className="field file">
-                                    <label className="upload control">
-                                        <a className="button is-dark">
-                                            <span className="icon"><i className="mdi mdi-upload default"></i></span>
-                                            <span>Escolher arquivos</span>
-                                        </a>
-                                        <input type="file" />
-                                    </label>
-                                </div>
-                            </div>
-                            <button type="submit" className="button is-primary">Enviar</button>
-                        </form>
-                    </div>
-                </div>
-            </section>
-        </div>
-    )
+  return (
+    <Dashboard>
+      {/* Page content */}
+      <Container className="bg-gradient-dark h-100 pb-8 pt-5 pt-md-8" fluid>
+        {/* Table */}
+        <Row>
+          <div className="col">
+            <Card className="shadow">
+              <CardHeader className="border-0">
+                <h3 className="mb-0">Novo Ticket</h3>
+              </CardHeader>
+
+              <CardBody>
+                <Form>
+                  <FormGroup>
+                    <label htmlFor="title">Título <span style={{ color: "red" }}>*</span></label>
+                    <Input
+                      id="title"
+                      placeholder="Insira o título/assunto"
+                      type="text"
+                    ></Input>
+                  </FormGroup>
+                  <FormGroup>
+                    <label htmlFor="description">Descrição <span style={{ color: "red" }}>*</span></label>
+                    <Input
+                      id="description"
+                      rows="3"
+                      placeholder="Descreva o seu problema"
+                      type="textarea"
+                    ></Input>
+                  </FormGroup>
+
+                  <Button color="primary" onClick={() => {
+                    const form = document.forms[0]
+                    setTickets([{
+                      id: ([...tickets.sort()].pop()?.id || tickets.length) + 1,
+                      subject: form.title.value,
+                      helper: '---',
+                      createdAt: Date.now(),
+                      updatedAt: 0,
+                      status: 'pendente',
+                      color: 'warning',
+                      timeline: [{
+                        avatar: 'https://avatars.dicebear.com/v2/initials/Marcos.svg',
+                        username: 'Marcos',
+                        description: form.description.value,
+                        createdAt: Date.now()
+                      }]
+                    }, ...tickets])
+
+                    form.reset()
+                    router.push('/tickets/@me')
+                  }}>Enviar</Button>
+                </Form>
+              </CardBody>
+            </Card>
+          </div>
+        </Row>
+      </Container >
+    </Dashboard >
+  );
 }

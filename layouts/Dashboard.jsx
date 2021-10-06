@@ -29,7 +29,7 @@ function Admin(props) {
         }}
       />
       <div className='main-content' ref={mainContentRef}>
-        <Navbar {...props} brandText={getBrandText()} />
+        <Navbar {...props} brandText={props.brandText ?? getBrandText()} />
         {props.children}
       </div>
     </>

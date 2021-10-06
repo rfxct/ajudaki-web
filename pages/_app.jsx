@@ -14,7 +14,7 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <Fragment>
       <Head>
-        <title>TCC: mux.go | next.js</title>
+        <title>AjudAki</title>
       </Head>
 
       <Component {...pageProps} />

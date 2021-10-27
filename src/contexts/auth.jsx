@@ -17,7 +17,9 @@ export function AuthProvider({ children }) {
 
     if (token) {
       recoverUserInformation().then(response => {
-        setUser(response.user)
+        if (!response.success) return Router.push('/login')
+        setUser(response.data)
+        if (Router.route === '/login') return Router.push('/tickets/@me')
       })
     }
   }, [])

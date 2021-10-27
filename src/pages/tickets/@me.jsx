@@ -25,10 +25,11 @@ import { useLocalStorage } from '../../hooks'
 import { Dashboard } from '../../layouts'
 import { Long } from '../../util/DateUtil'
 
-export default function MeusTickets() {
-  
-  const [tickets, setTickets] = useLocalStorage('tickets', [])
-  
+import { getAPIClient } from '../../services/axios'
+
+export default function MeusTickets({ tickets }) {
+  // const [tickets, setTickets] = useLocalStorage('tickets', [])
+
   return (
     <Dashboard>
       {/* Page content */}
@@ -62,7 +63,7 @@ export default function MeusTickets() {
                             alt={r.helper}
                             width='48px'
                             height='48px'
-                            src={r?.avatar || `https://avatars.dicebear.com/v2/initials/${r.helper.split(' ').join('-')
+                            src={r?.avatar || `https://avatars.dicebear.com/v2/initials/${r.helper?.split(' ').join('-')
                               }.svg`}
                           />
                           <Link
@@ -104,7 +105,7 @@ export default function MeusTickets() {
                               href="#"
                               data-parent={r.id}
                               onClick={(e) => {
-                                setTickets(tickets.filter(t => t.id != e.target.dataset.parent))
+                                //setTickets(tickets.filter(t => t.id != e.target.dataset.parent))
                               }}
                             >
                               Deletar
@@ -158,4 +159,13 @@ export default function MeusTickets() {
       </Container >
     </Dashboard >
   );
+}
+
+export async function getServerSideProps(ctx) {
+  const apiClient = getAPIClient(ctx)
+  const { data } = await apiClient.get('/users/@me/tickets')
+  
+  return {
+    props: { tickets: data },
+  }
 }

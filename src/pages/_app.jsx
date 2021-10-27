@@ -5,6 +5,8 @@ import '../styles/global.css'
 import '../styles/nucleo/css/nucleo.css'
 import '../styles/argon.css'
 
+import { AuthProvider } from '../contexts/auth'
+
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     const comment = document.createComment(' Desenvolvido por Marc (github.com/rfxct) ')
@@ -12,12 +14,14 @@ export default function MyApp({ Component, pageProps }) {
   }, [])
 
   return (
-    <Fragment>
-      <Head>
-        <title>AjudAki</title>
-      </Head>
+    <AuthProvider>
+      <Fragment>
+        <Head>
+          <title>AjudAki</title>
+        </Head>
 
-      <Component {...pageProps} />
-    </Fragment>
+        <Component {...pageProps} />
+      </Fragment>
+    </AuthProvider>
   )
 }

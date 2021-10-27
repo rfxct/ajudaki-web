@@ -8,19 +8,13 @@ import {
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Form,
-  FormGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  InputGroup,
   Navbar,
   Nav,
   Container,
   Media,
 } from "reactstrap";
 
-function AdminNavbar({ brandText }) {
+function AdminNavbar({ brandText, user }) {
   return (
     <>
       <Navbar className="navbar-top navbar-dark bg-gradient-dark" expand="md" id="navbar-main">
@@ -49,14 +43,14 @@ function AdminNavbar({ brandText }) {
                   <span className="avatar avatar-sm rounded-circle">
                     <Image
                       alt="..."
-                      src="https://avatars.dicebear.com/v2/initials/Marcos.svg"
+                      src={`https://avatars.dicebear.com/v2/initials/${user.full_name}.svg`}
                       width="48px"
                       height="48px"
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Marcos Ferreira
+                     {user.full_name}
                     </span>
                   </Media>
                 </Media>

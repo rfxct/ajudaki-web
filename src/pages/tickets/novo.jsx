@@ -1,7 +1,6 @@
-import { useRef } from 'react'
 import { useRouter } from 'next/router'
 
-import { Dashboard } from '../../layouts'
+import Dashboard from '../../layouts/Dashboard'
 import { useLocalStorage } from '../../hooks'
 
 import {
@@ -16,7 +15,8 @@ import {
   Button
 } from 'reactstrap';
 
-export default function MeusTickets() {
+import checkAuth from '../../util/CheckAuth'
+export function NovoTicket() {
   const router = useRouter()
 
   const [tickets, setTickets] = useLocalStorage('tickets', [])
@@ -82,4 +82,14 @@ export default function MeusTickets() {
       </Container >
     </Dashboard >
   );
+}
+
+export async function getServerSideProps(ctx) {
+  const user = await checkAuth(ctx)
+  if (!user) return {
+    redirect: {
+      destination: '/login',
+      permanent: false,
+    }
+  }
 }

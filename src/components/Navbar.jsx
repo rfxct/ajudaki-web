@@ -12,9 +12,10 @@ import {
   Nav,
   Container,
   Media,
-} from "reactstrap";
+} from 'reactstrap'
 
 function AdminNavbar({ brandText, user }) {
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark bg-gradient-dark" expand="md" id="navbar-main">
@@ -24,18 +25,6 @@ function AdminNavbar({ brandText, user }) {
               {brandText}
             </a>
           </Link>
-          {/* <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
-            <FormGroup className="mb-0">
-              <InputGroup className="input-group-alternative">
-                <InputGroupAddon addonType="prepend">
-                  <InputGroupText>
-                    <i className="fas fa-search" />
-                  </InputGroupText>
-                </InputGroupAddon>
-                <Input placeholder="Search" type="text" />
-              </InputGroup>
-            </FormGroup>
-          </Form> */}
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
@@ -43,14 +32,14 @@ function AdminNavbar({ brandText, user }) {
                   <span className="avatar avatar-sm rounded-circle">
                     <Image
                       alt="..."
-                      src={`https://avatars.dicebear.com/v2/initials/${user.full_name}.svg`}
+                      src={`https://avatars.dicebear.com/v2/initials/${user?.full_name}.svg`}
                       width="48px"
                       height="48px"
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                     {user.full_name}
+                      {user.full_name}
                     </span>
                   </Media>
                 </Media>
@@ -86,4 +75,4 @@ function AdminNavbar({ brandText, user }) {
   );
 }
 
-export default AdminNavbar;
+export default AdminNavbar

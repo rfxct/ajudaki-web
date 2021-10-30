@@ -21,6 +21,8 @@ import {
 import Brand from '../components/Brand'
 import { AuthContext } from '../contexts/auth'
 
+import checkAuth from '../util/CheckAuth'
+
 export default function Login() {
   const [loading, setLoading] = useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm()
@@ -36,7 +38,6 @@ export default function Login() {
     setLoading(true)
 
     const result = await signIn({ email, password })
-    
     if (result) toast.error(result)
 
     setLoading(false)
@@ -130,4 +131,15 @@ export default function Login() {
       </Container>
     </div>
   )
+}
+
+export async function getServerSideProps(ctx) {
+  const user = await checkAuth(ctx)
+  if (user) return {
+    redirect: {
+      destination: '/tickets/@me',
+      permanent: false
+    }
+  }
+  return { props: {} }
 }

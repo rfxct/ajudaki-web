@@ -14,24 +14,22 @@ import {
   Pagination,
   PaginationItem,
   PaginationLink,
-  Progress,
   Table,
   Container,
-  Row,
-  UncontrolledTooltip,
+  Row
 } from 'reactstrap';
 
-import { useLocalStorage } from '../../hooks'
-import { Dashboard } from '../../layouts'
+import Dashboard from '../../layouts/Dashboard'
 import { Long } from '../../util/DateUtil'
+import checkAuth from '../../util/CheckAuth'
 
 import { getAPIClient } from '../../services/axios'
 
-export default function MeusTickets({ tickets }) {
+export default function MeusTickets({ tickets, user }) {
   // const [tickets, setTickets] = useLocalStorage('tickets', [])
 
   return (
-    <Dashboard>
+    <Dashboard user={user}>
       {/* Page content */}
       <Container className="pb-8 pt-5 pt-md-8" fluid>
         {/* Table */}
@@ -156,16 +154,24 @@ export default function MeusTickets({ tickets }) {
             </Card>
           </div>
         </Row>
-      </Container >
-    </Dashboard >
+      </Container>
+    </Dashboard>
   );
 }
 
 export async function getServerSideProps(ctx) {
+  const user = await checkAuth(ctx)
+
   const apiClient = getAPIClient(ctx)
-  const { data } = await apiClient.get('/users/@me/tickets')
-  
-  return {
-    props: { tickets: data },
+  const { data } = await apiClient.get('/users/@me/tickets').catch(() => [])
+
+  if (!user) return {
+    redirect: {
+      destination: '/login',
+      permanent: false,
+    },
+    props: {}
   }
+  
+  return { props: { user, tickets: data ?? [] } }
 }

@@ -9,7 +9,7 @@ import { AuthProvider } from '../contexts/auth'
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
-    const comment = document.createComment(' Desenvolvido por Marc (github.com/rfxct) ')
+    const comment = document.createComment('Desenvolvido por Marc (github.com/rfxct) ')
     document.insertBefore(comment, document.documentElement)
   }, [])
 
@@ -19,7 +19,6 @@ export default function MyApp({ Component, pageProps }) {
         <Head>
           <title>AjudAki</title>
         </Head>
-
         <Component {...pageProps} />
       </Fragment>
     </AuthProvider>

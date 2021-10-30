@@ -3,11 +3,13 @@ import { useRouter } from 'next/router'
 import { useLocalStorage } from '../../hooks'
 
 import { Container, Col, Card, CardBody, CardTitle, Row, Input, Label, FormGroup, Form, Button } from 'reactstrap'
-import { Dashboard } from '../../layouts'
+import Dashboard from '../../layouts/Dashboard'
 
 import { Long } from '../../util/DateUtil'
+import checkAuth from '../../util/CheckAuth'
+import { getAPIClient } from '../../services/axios'
 
-export default function Ticket({ }) {
+export default function Ticket() {
   const router = useRouter()
   const { ticket_id } = router.query
 
@@ -104,4 +106,22 @@ export default function Ticket({ }) {
       </Container>
     </Dashboard>
   )
+}
+
+
+export async function getServerSideProps(ctx) {
+  const user = await checkAuth(ctx)
+
+  const apiClient = getAPIClient(ctx)
+  const { data } = await apiClient.get('/users/@me/tickets').catch(() => [])
+
+  if (!user) return {
+    redirect: {
+      destination: '/login',
+      permanent: false,
+    },
+    props: {}
+  }
+  
+  return { props: { user, tickets: data ?? [] } }
 }

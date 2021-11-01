@@ -16,13 +16,14 @@ import {
 } from 'reactstrap';
 
 import checkAuth from '../../util/CheckAuth'
-export function NovoTicket() {
+
+export default  function NovoTicket({ user }) {
   const router = useRouter()
 
   const [tickets, setTickets] = useLocalStorage('tickets', [])
 
   return (
-    <Dashboard>
+    <Dashboard user={user}>
       {/* Page content */}
       <Container className="pb-8 pt-5 pt-md-8" fluid>
         {/* Table */}
@@ -92,4 +93,6 @@ export async function getServerSideProps(ctx) {
       permanent: false,
     }
   }
+
+  return { props: { user } }
 }

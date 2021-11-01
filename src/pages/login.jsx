@@ -44,7 +44,7 @@ export default function Login() {
   }
 
   return (
-    <div className="main-content h-100 d-flex align-items-center">
+    <div className="main-content bg-default h-100 d-flex align-items-center">
       <Container>
         <ToastContainer />
         <Row className="justify-content-center">

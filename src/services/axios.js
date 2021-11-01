@@ -5,7 +5,7 @@ export function getAPIClient(ctx) {
   const { 'nextauth.token': token } = parseCookies(ctx)
 
   const api = axios.create({
-    baseURL: 'http://localhost:3333/api'
+    baseURL: 'http://marc.rdp.fxck.cf:3333/api' // 'http://localhost:3333/api'
   })
 
   api.interceptors.request.use(config => {

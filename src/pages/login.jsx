@@ -42,7 +42,6 @@ export default function Login() {
 
     setLoading(false)
   }
-  useEffect(() => document.body.classList.add('bg-default'), [])
 
   return (
     <div className="main-content h-100 d-flex align-items-center">
@@ -75,6 +74,7 @@ export default function Login() {
                         type="email"
                         id="email-input"
                         disabled={loading}
+                        required={true}
                       />
                     </InputGroup>
                   </FormGroup>
@@ -92,6 +92,7 @@ export default function Login() {
                         id='password-input'
                         type="password"
                         disabled={loading}
+                        required={true}
                       />
                     </InputGroup>
                   </FormGroup>
@@ -106,26 +107,6 @@ export default function Login() {
                 </form>
               </CardBody>
             </Card>
-            <Row className='mt-3'>
-              <Col xs='6'>
-                <a
-                  className='text-light'
-                  href='#'
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <small>Esqueceu a senha?</small>
-                </a>
-              </Col>
-              <Col className='text-right' xs='6'>
-                <a
-                  className='text-light'
-                  href='#'
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <small>Criar nova conta</small>
-                </a>
-              </Col>
-            </Row>
           </Col>
         </Row>
       </Container>

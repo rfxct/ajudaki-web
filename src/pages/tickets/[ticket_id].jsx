@@ -1,18 +1,49 @@
+import 'react-toastify/dist/ReactToastify.css'
+
 import Image from 'next/image'
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { ToastContainer, toast } from 'react-toastify'
 
 import { Container, Col, Card, CardBody, CardTitle, Row, Input, Label, FormGroup, Form, Button } from 'reactstrap'
 import Dashboard from '../../layouts/Dashboard'
+import { api } from '../../services/api'
 
 import { displayDate } from '../../util/DateUtil'
 import checkAuth from '../../util/CheckAuth'
 import { getAPIClient } from '../../services/axios'
 
 export default function Ticket({ user, ticket }) {
+  const [loading, setLoading] = useState(false)
+  const [messages, setMessages] = useState(ticket.messages)
+  const { register, reset, handleSubmit, formState: { errors } } = useForm()
+
+  function handleErrors() {
+    for (const type in errors) {
+      toast.error(errors[type].message)
+    }
+  }
+
+  async function onSubmit({ content }) {
+    setLoading(true)
+    console.log(ticket)
+    try {
+      const { data } = await api.post(`tickets/${ticket.id}/messages`, { content })
+      toast.success('Resposta enviada com sucesso')
+      setMessages([...messages, data])
+      reset({ keepDirty: false })
+    } catch (e) {console.log(e)
+      toast.error('Preencha os campos corretamente')
+    }
+
+    setLoading(false)
+  }
+
   return (
-    // `Ticket #${ticket_id} ${ticket.subject}`
     <Dashboard brandText={ticket.subject} user={user}>
       <Container className="pb-8 pt-5 pt-md-8" fluid>
+        <ToastContainer />
         <h1>{ticket?.subject || 'Ticket não encontrado'}</h1>
         {ticket && (
           <Row>
@@ -48,7 +79,7 @@ export default function Ticket({ user, ticket }) {
                 </CardBody>
               </Card>
 
-              {ticket?.messages?.sort((a, b) => a.created_at - b.created_at)?.map((topic, i) => {
+              {messages?.sort((a, b) => a.created_at - b.created_at)?.map((topic, i) => {
                 return (
                   <Card className="mb-2" key={i}>
                     <CardBody>
@@ -82,15 +113,24 @@ export default function Ticket({ user, ticket }) {
                 )
               })}
 
-              <Form className="mt-5">
+              <form onSubmit={handleSubmit(onSubmit, handleErrors)}>
                 <FormGroup>
-                  <Label for="answer">Responder</Label>
-                  <Input type="textarea" name="answer" id="answer" />
+                  <label htmlFor="content-input">Responder</label>
+                  <textarea
+                    className='form-control'
+                    {...register('content', { required: 'A resposta não pode estar vazia' })}
+                    placeholder='Escreva sua resposta'
+                    rows='3'
+                    id="content-input"
+                    disabled={loading}
+                    required={true}
+                  />
                 </FormGroup>
 
                 <Button
                   className="float-right"
                   color="primary"
+                  type="submit"
                   onClick={e => {
                     // const form = document.forms[0]
                     // const index = tickets.findIndex(t => t.id == ticket.id)
@@ -98,7 +138,7 @@ export default function Ticket({ user, ticket }) {
                     // ticket.timeline.unshift({
                     //   avatar: 'https://avatars.dicebear.com/v2/initials/Marcos.svg',
                     //   topic?.author.full_name: 'Marcos',
-                    //   description: form.answer.value,
+                    //   description: form.content.value,
                     //   created_at: Date.now()
                     // })
                     // tickets.splice(index, 1)
@@ -109,8 +149,8 @@ export default function Ticket({ user, ticket }) {
 
                     // form.reset()
                   }}
-                >Responder</Button>
-              </Form>
+                >Enviar</Button>
+              </form>
             </Col>
             <Col xs={4}>
               <hr style={{ visibility: 'hidden' }} />

@@ -1,6 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css'
 
-import { useEffect, useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { ToastContainer, toast } from 'react-toastify'

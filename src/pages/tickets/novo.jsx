@@ -1,7 +1,12 @@
+import 'react-toastify/dist/ReactToastify.css'
+
 import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { ToastContainer, toast } from 'react-toastify'
 
 import Dashboard from '../../layouts/Dashboard'
-import { useLocalStorage } from '../../hooks'
+import { api } from '../../services/api'
 
 import {
   Card,
@@ -17,15 +22,40 @@ import {
 
 import checkAuth from '../../util/CheckAuth'
 
-export default  function NovoTicket({ user }) {
+export default function NovoTicket({ user }) {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
+  const { register, reset, handleSubmit, formState: { errors } } = useForm()
 
-  const [tickets, setTickets] = useLocalStorage('tickets', [])
+  function handleErrors() {
+    for (const type in errors) {
+      toast.error(errors[type].message)
+    }
+  }
+
+  async function onSubmit({ subject, description }) {
+    setLoading(true)
+
+    try {
+      await api.post('tickets', { subject, description })
+      toast.success('Ticket criado com sucesso', { autoClose: 3000 })
+      reset({ keepDirty: false })
+
+      setTimeout(() => {
+        router.push('/tickets/@me')
+      }, 3000)
+    } catch {
+      toast.error('Preencha os campos corretamente')
+    }
+
+    setLoading(false)
+  }
 
   return (
     <Dashboard user={user}>
       {/* Page content */}
       <Container className="pb-8 pt-5 pt-md-8" fluid>
+        <ToastContainer />
         {/* Table */}
         <Row>
           <div className="col">
@@ -35,47 +65,40 @@ export default  function NovoTicket({ user }) {
               </CardHeader>
 
               <CardBody>
-                <Form>
+                <form onSubmit={handleSubmit(onSubmit, handleErrors)}>
                   <FormGroup>
-                    <label htmlFor="title">Título <span style={{ color: "red" }}>*</span></label>
-                    <Input
-                      id="title"
-                      placeholder="Insira o título/assunto"
-                      type="text"
-                    ></Input>
+                    <label htmlFor="subject-input">Título <span style={{ color: "red" }}>*</span></label>
+                    <input
+                      className='form-control'
+                      {...register('subject', { required: 'O título não pode estar vazio' })}
+                      placeholder='Insira o título/assunto'
+                      type='text'
+                      id="subject-input"
+                      disabled={loading}
+                      required={true}
+                    />
                   </FormGroup>
                   <FormGroup>
-                    <label htmlFor="description">Descrição <span style={{ color: "red" }}>*</span></label>
-                    <Input
-                      id="description"
-                      rows="3"
-                      placeholder="Descreva o seu problema"
-                      type="textarea"
-                    ></Input>
+                    <label htmlFor="description-input">Descrição <span style={{ color: "red" }}>*</span></label>
+                    <textarea
+                      className='form-control'
+                      {...register('description', { required: 'A descrição não pode estar vazia' })}
+                      placeholder='Descreva o seu problema'
+                      rows='3'
+                      id="description-input"
+                      disabled={loading}
+                      required={true}
+                    />
                   </FormGroup>
 
-                  <Button color="primary" onClick={() => {
-                    const form = document.forms[0]
-                    setTickets([{
-                      id: ([...tickets.sort()].pop()?.id || tickets.length) + 1,
-                      subject: form.title.value,
-                      helper: '---',
-                      createdAt: Date.now(),
-                      updatedAt: 0,
-                      status: 'pendente',
-                      color: 'warning',
-                      timeline: [{
-                        avatar: 'https://avatars.dicebear.com/v2/initials/Marcos.svg',
-                        username: 'Marcos',
-                        description: form.description.value,
-                        createdAt: Date.now()
-                      }]
-                    }, ...tickets])
-
-                    form.reset()
-                    router.push('/tickets/@me')
-                  }}>Enviar</Button>
-                </Form>
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    color='primary'
+                  >
+                    Enviar
+                  </Button>
+                </form>
               </CardBody>
             </Card>
           </div>

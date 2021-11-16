@@ -1,61 +1,86 @@
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useLocalStorage } from '../../hooks'
 
 import { Container, Col, Card, CardBody, CardTitle, Row, Input, Label, FormGroup, Form, Button } from 'reactstrap'
 import Dashboard from '../../layouts/Dashboard'
 
-import { Long } from '../../util/DateUtil'
+import { displayDate } from '../../util/DateUtil'
 import checkAuth from '../../util/CheckAuth'
 import { getAPIClient } from '../../services/axios'
 
-export default function Ticket() {
-  const router = useRouter()
-  const { ticket_id } = router.query
-
-  const [tickets, setTickets] = useLocalStorage('tickets', [])
-
-  const ticketData = tickets.find(t => t.id == ticket_id)
-  
+export default function Ticket({ user, ticket }) {
   return (
-    <Dashboard brandText={`Ticket #${ticket_id}`}>
+    // `Ticket #${ticket_id} ${ticket.subject}`
+    <Dashboard brandText={ticket.subject} user={user}>
       <Container className="pb-8 pt-5 pt-md-8" fluid>
-        <h1>{ticketData?.subject || 'Ticket não encontrado'}</h1>
-
-        {ticketData && (
+        <h1>{ticket?.subject || 'Ticket não encontrado'}</h1>
+        {ticket && (
           <Row>
             <Col xs={8}>
-              {ticketData.timeline.sort((a, b) => a.createdAt - b.createdAt).map((topic, i) => (
-                <Card className="mb-2" key={i}>
-                  <CardBody>
-                    <Row className="mb-4">
-                      <Col xs='auto'>
-                        <Image
-                          className="rounded-circle"
-                          width="40px" height="40px"
-                          src={topic.avatar}
-                          alt={`#${i}#${topic.username}`}
-                        />
-                      </Col>
-                      {/* Topic Author info */}
-                      <Col className='pl-0'>
-                        <CardTitle className="text-dark font-weight-bold mb-0">
-                          {topic.username}
-                        </CardTitle>
-                        <span className="text-muted h5 mb-0">
-                          {Long.format(topic.createdAt)}
-                        </span>
-                      </Col>
-                    </Row>
+              <hr />
+              <Card className="mb-2">
+                <CardBody>
+                  <Row className="mb-4">
+                    <Col xs='auto'>
+                      <Image
+                        className="rounded-circle"
+                        width="40px" height="40px"
+                        src={`https://avatars.dicebear.com/v2/initials/${ticket?.creator?.full_name || ''}.svg`}
+                        alt={`#description#${ticket?.creator?.full_name}`}
+                      />
+                    </Col>
+                    {/* Topic Author info */}
+                    <Col className='pl-0'>
+                      <CardTitle className="text-dark font-weight-bold mb-0">
+                        {ticket?.creator?.full_name || 'Desconhecido'}
+                      </CardTitle>
+                      <span className="text-muted h5 mb-0">
+                        {displayDate(ticket?.created_at)}
+                      </span>
+                    </Col>
+                  </Row>
 
-                    {topic.description.split('\n').map((paragraph, i) => (
-                      <p key={i} className="font-weight-normal text-sm">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </CardBody>
-                </Card>
-              ))}
+                  {ticket?.description.split('\n').map((paragraph, i) => (
+                    <p key={i} className="font-weight-normal text-sm">
+                      {paragraph}
+                    </p>
+                  ))}
+                </CardBody>
+              </Card>
+
+              {ticket?.messages?.sort((a, b) => a.created_at - b.created_at)?.map((topic, i) => {
+                return (
+                  <Card className="mb-2" key={i}>
+                    <CardBody>
+                      <Row className="mb-4">
+                        <Col xs='auto'>
+                          <Image
+                            className="rounded-circle"
+                            width="40px" height="40px"
+                            src={`https://avatars.dicebear.com/v2/initials/${topic?.author.full_name || ''}.svg`}
+                            alt={`#${i}#${topic?.author.full_name}`}
+                          />
+                        </Col>
+                        {/* Topic Author info */}
+                        <Col className='pl-0'>
+                          <CardTitle className="text-dark font-weight-bold mb-0">
+                            {topic?.author.full_name}
+                          </CardTitle>
+                          <span className="text-muted h5 mb-0">
+                            {displayDate(topic.created_at)}
+                          </span>
+                        </Col>
+                      </Row>
+
+                      {topic.content.split('\n').map((paragraph, i) => (
+                        <p key={i} className="font-weight-normal text-sm">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </CardBody>
+                  </Card>
+                )
+              })}
 
               <Form className="mt-5">
                 <FormGroup>
@@ -67,39 +92,44 @@ export default function Ticket() {
                   className="float-right"
                   color="primary"
                   onClick={e => {
-                    const form = document.forms[0]
-                    const index = tickets.findIndex(t => t.id == ticketData.id)
+                    // const form = document.forms[0]
+                    // const index = tickets.findIndex(t => t.id == ticket.id)
 
-                    ticketData.timeline.unshift({
-                      avatar: 'https://avatars.dicebear.com/v2/initials/Marcos.svg',
-                      username: 'Marcos',
-                      description: form.answer.value,
-                      createdAt: Date.now()
-                    })
-                    tickets.splice(index, 1)
+                    // ticket.timeline.unshift({
+                    //   avatar: 'https://avatars.dicebear.com/v2/initials/Marcos.svg',
+                    //   topic?.author.full_name: 'Marcos',
+                    //   description: form.answer.value,
+                    //   created_at: Date.now()
+                    // })
+                    // tickets.splice(index, 1)
 
-                    const newTickets = [...tickets, ticketData]
+                    // const newTickets = [...tickets, ticket]
 
-                    setTickets(newTickets)
+                    // setTickets(newTickets)
 
-                    form.reset()
+                    // form.reset()
                   }}
                 >Responder</Button>
               </Form>
             </Col>
             <Col xs={4}>
-              <div className="mb-3">
-                <h4>Solicitante</h4>
-                <span>{ticketData.username}</span>
-              </div>
-              <div className="mb-3">
-                <h4>Criado em</h4>
-                <span>{Long.format(ticketData.createdAt)}</span>
-              </div>
-              <div className="mb-3">
-                <h4>Atualizado em</h4>
-                <span>{Long.format(ticketData.updatedAt)}</span>
-              </div>
+              <hr style={{ visibility: 'hidden' }} />
+              <Card className="mb-2">
+                <CardBody>
+                  <div className="mb-3">
+                    <h4>Solicitante</h4>
+                    <span>{ticket.creator.full_name}</span>
+                  </div>
+                  <div className="mb-3">
+                    <h4>Criado em</h4>
+                    <span>{displayDate(ticket.created_at)}</span>
+                  </div>
+                  <div className="mb-3">
+                    <h4>Atualizado em</h4>
+                    <span>{displayDate(ticket.updated_at)}</span>
+                  </div>
+                </CardBody>
+              </Card>
             </Col>
           </Row>
         )}
@@ -113,7 +143,7 @@ export async function getServerSideProps(ctx) {
   const user = await checkAuth(ctx)
 
   const apiClient = getAPIClient(ctx)
-  const { data } = await apiClient.get('/users/@me/tickets').catch(() => [])
+  const { data } = await apiClient.get(`/tickets/${ctx.query.ticket_id}`).catch(() => [])
 
   if (!user) return {
     redirect: {
@@ -122,6 +152,6 @@ export async function getServerSideProps(ctx) {
     },
     props: {}
   }
-  
-  return { props: { user, tickets: data ?? [] } }
+
+  return { props: { user, ticket: data ?? {} } }
 }

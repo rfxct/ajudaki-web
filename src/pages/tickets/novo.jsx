@@ -37,12 +37,13 @@ export default function NovoTicket({ user }) {
     setLoading(true)
 
     try {
-      await api.post('tickets', { subject, description })
+      const { data } = await api.post('tickets', { subject, description })
       toast.success('Ticket criado com sucesso', { autoClose: 3000 })
       reset({ keepDirty: false })
 
+      console.log(data)
       setTimeout(() => {
-        router.push('/tickets/@me')
+        router.push(`/tickets/${data.id}`)
       }, 3000)
     } catch {
       toast.error('Preencha os campos corretamente')

@@ -19,16 +19,13 @@ import {
 } from 'reactstrap';
 
 import Dashboard from '../../layouts/Dashboard'
-import { displayDate } from '../../util/DateUtil'
 import checkAuth from '../../util/CheckAuth'
 import { colorMap } from '../../util/StatusColor'
+import { displayDate } from '../../util/DateUtil'
 
 import { getAPIClient } from '../../services/axios'
-import { api } from '../../services/api'
 
-export default function MeusTickets({ tickets, user }) {
-  // const [tickets, setTickets] = useLocalStorage('tickets', [])
-
+export default function MeusTickets({ tickets, meta, user }) {
   return (
     <Dashboard user={user}>
       {/* Page content */}
@@ -60,7 +57,7 @@ export default function MeusTickets({ tickets, user }) {
                           <Media className="align-items-center">
                             <Link
                               href={`/tickets/${r.id}`}
-                              onClick={(e) => e.preventDefault()}
+                              onClick={e => e.preventDefault()}
                             >
                               <a>
                                 <span style={{ cursor: 'pointer' }} className="mb-0 text-sm">
@@ -91,7 +88,7 @@ export default function MeusTickets({ tickets, user }) {
                               role="button"
                               size="sm"
                               color=""
-                              onClick={(e) => e.preventDefault()}
+                              onClick={e => e.preventDefault()}
                             >
                               <i className="fas fa-ellipsis-v" />
                             </DropdownToggle>
@@ -99,7 +96,7 @@ export default function MeusTickets({ tickets, user }) {
                               <DropdownItem
                                 href="#"
                                 data-parent={r.id}
-                                onClick={(e) => {
+                                onClick={e => {
                                   //setTickets(tickets.filter(t => t.id != e.target.dataset.parent))
                                 }}
                               >
@@ -120,32 +117,36 @@ export default function MeusTickets({ tickets, user }) {
                     className="pagination justify-content-end mb-0"
                     listClassName="justify-content-end mb-0"
                   >
-                    <PaginationItem className="disabled">
-                      <PaginationLink
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                        tabIndex="-1"
+                    {/* Anterior */}
+                    <PaginationItem disabled={meta.current_page <= 1}>
+                      <Link
+                        href={`/tickets/@me?page=${meta.current_page - 1}`}
                       >
-                        <i className="fas fa-angle-left" />
-                        <span className="sr-only">Anterior</span>
-                      </PaginationLink>
+                        <a className="page-link">
+                          <i className="fas fa-angle-left" />
+                          <span className="sr-only">Anterior</span>
+                        </a>
+                      </Link>
                     </PaginationItem>
+                    {/* Atual */}
                     <PaginationItem className="active">
                       <PaginationLink
                         href="#"
-                        onClick={(e) => e.preventDefault()}
+                        onClick={e => e.preventDefault()}
                       >
-                        1
+                        {meta.current_page}
                       </PaginationLink>
                     </PaginationItem>
-                    <PaginationItem className="disabled">
-                      <PaginationLink
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
+                    {/* Próximo */}
+                    <PaginationItem disabled={meta.current_page >= meta.last_page}>
+                      <Link
+                        href={`/tickets/@me?page=${meta.current_page + 1}`}
                       >
-                        <i className="fas fa-angle-right" />
-                        <span className="sr-only">Próximo</span>
-                      </PaginationLink>
+                        <a className="page-link">
+                          <i className="fas fa-angle-right" />
+                          <span className="sr-only">Próximo</span>
+                        </a>
+                      </Link>
                     </PaginationItem>
                   </Pagination>
                 </nav>
@@ -162,7 +163,8 @@ export async function getServerSideProps(ctx) {
   const user = await checkAuth(ctx)
 
   const apiClient = getAPIClient(ctx)
-  const { data } = await apiClient.get('/users/@me/tickets').catch(() => [])
+  const { data } = await apiClient.get(`/users/@me/tickets?page=${ctx.query.page || 1}`).catch(() => [])
+
 
   if (!user) return {
     redirect: {
@@ -172,5 +174,5 @@ export async function getServerSideProps(ctx) {
     props: {}
   }
 
-  return { props: { user, tickets: data ?? [] } }
+  return { props: { user, tickets: data.data, meta: data.meta } }
 }

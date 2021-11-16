@@ -15,8 +15,6 @@ import {
   Container,
   Row,
   FormGroup,
-  Form,
-  Input,
   Button
 } from 'reactstrap';
 
@@ -38,13 +36,9 @@ export default function NovoTicket({ user }) {
 
     try {
       const { data } = await api.post('tickets', { subject, description })
-      toast.success('Ticket criado com sucesso', { autoClose: 3000 })
       reset({ keepDirty: false })
 
-      console.log(data)
-      setTimeout(() => {
-        router.push(`/tickets/${data.id}`)
-      }, 3000)
+      router.push(`/tickets/${data.id}`)
     } catch {
       toast.error('Preencha os campos corretamente')
     }

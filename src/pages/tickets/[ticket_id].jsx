@@ -1,12 +1,11 @@
 import 'react-toastify/dist/ReactToastify.css'
 
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify'
 
-import { Container, Col, Card, CardBody, CardTitle, Row, Input, Label, FormGroup, Form, Button } from 'reactstrap'
+import { Container, Col, Card, CardBody, CardTitle, Row, FormGroup, Button } from 'reactstrap'
 import Dashboard from '../../layouts/Dashboard'
 import { api } from '../../services/api'
 
@@ -27,13 +26,14 @@ export default function Ticket({ user, ticket }) {
 
   async function onSubmit({ content }) {
     setLoading(true)
-    console.log(ticket)
+
     try {
       const { data } = await api.post(`tickets/${ticket.id}/messages`, { content })
       toast.success('Resposta enviada com sucesso')
       setMessages([...messages, data])
       reset({ keepDirty: false })
-    } catch (e) {console.log(e)
+    } catch (e) {
+      console.log(e)
       toast.error('Preencha os campos corretamente')
     }
 
@@ -81,35 +81,38 @@ export default function Ticket({ user, ticket }) {
 
               {messages?.sort((a, b) => a.created_at - b.created_at)?.map((topic, i) => {
                 return (
-                  <Card className="mb-2" key={i}>
-                    <CardBody>
-                      <Row className="mb-4">
-                        <Col xs='auto'>
-                          <Image
-                            className="rounded-circle"
-                            width="40px" height="40px"
-                            src={`https://avatars.dicebear.com/v2/initials/${topic?.author.full_name || ''}.svg`}
-                            alt={`#${i}#${topic?.author.full_name}`}
-                          />
-                        </Col>
-                        {/* Topic Author info */}
-                        <Col className='pl-0'>
-                          <CardTitle className="text-dark font-weight-bold mb-0">
-                            {topic?.author.full_name}
-                          </CardTitle>
-                          <span className="text-muted h5 mb-0">
-                            {displayDate(topic.created_at)}
-                          </span>
-                        </Col>
-                      </Row>
+                  <>
+                    <hr />
+                    <Card className="mb-2" key={i}>
+                      <CardBody>
+                        <Row className="mb-4">
+                          <Col xs='auto'>
+                            <Image
+                              className="rounded-circle"
+                              width="40px" height="40px"
+                              src={`https://avatars.dicebear.com/v2/initials/${topic?.author.full_name || ''}.svg`}
+                              alt={`#${i}#${topic?.author.full_name}`}
+                            />
+                          </Col>
+                          {/* Topic Author info */}
+                          <Col className='pl-0'>
+                            <CardTitle className="text-dark font-weight-bold mb-0">
+                              {topic?.author.full_name}
+                            </CardTitle>
+                            <span className="text-muted h5 mb-0">
+                              {displayDate(topic.created_at)}
+                            </span>
+                          </Col>
+                        </Row>
 
-                      {topic.content.split('\n').map((paragraph, i) => (
-                        <p key={i} className="font-weight-normal text-sm">
-                          {paragraph}
-                        </p>
-                      ))}
-                    </CardBody>
-                  </Card>
+                        {topic.content.split('\n').map((paragraph, i) => (
+                          <p key={i} className="font-weight-normal text-sm">
+                            {paragraph}
+                          </p>
+                        ))}
+                      </CardBody>
+                    </Card>
+                  </>
                 )
               })}
 
@@ -131,25 +134,9 @@ export default function Ticket({ user, ticket }) {
                   className="float-right"
                   color="primary"
                   type="submit"
-                  onClick={e => {
-                    // const form = document.forms[0]
-                    // const index = tickets.findIndex(t => t.id == ticket.id)
-
-                    // ticket.timeline.unshift({
-                    //   avatar: 'https://avatars.dicebear.com/v2/initials/Marcos.svg',
-                    //   topic?.author.full_name: 'Marcos',
-                    //   description: form.content.value,
-                    //   created_at: Date.now()
-                    // })
-                    // tickets.splice(index, 1)
-
-                    // const newTickets = [...tickets, ticket]
-
-                    // setTickets(newTickets)
-
-                    // form.reset()
-                  }}
-                >Enviar</Button>
+                >
+                  Enviar
+                </Button>
               </form>
             </Col>
             <Col xs={4}>

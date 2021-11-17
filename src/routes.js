@@ -27,3 +27,41 @@ export default [
     layout: "/tickets",
   }
 ].map(data => new Route(data))
+
+const helper = [
+  {
+    path: "/novo",
+    name: "Criar Ticket",
+    icon: <FaPlusSquare />,
+    layout: "/tickets",
+  },
+  {
+    path: "/@me",
+    name: "Meus tickets",
+    icon: <FaTicketAlt />,
+    layout: "/tickets",
+  }
+]
+
+const admin = [
+  ...helper
+]
+
+const x = {
+  admin,
+  helper,
+  default: [
+    {
+      path: "/novo",
+      name: "Criar Ticket",
+      icon: <FaPlusSquare />,
+      layout: "/tickets",
+    },
+    {
+      path: "/@me",
+      name: "Meus tickets",
+      icon: <FaTicketAlt />,
+      layout: "/tickets",
+    }
+  ],
+}

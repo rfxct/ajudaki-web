@@ -15,7 +15,8 @@ import {
   PaginationLink,
   Table,
   Container,
-  Row
+  Row,
+  UncontrolledTooltip
 } from 'reactstrap';
 
 import Dashboard from '../../layouts/Dashboard'
@@ -41,7 +42,7 @@ export default function MeusTickets({ tickets, meta, user }) {
                 <thead className="thead-light">
                   <tr>
                     <th scope="col">Assunto</th>
-                    <th scope="col">Ajudante</th>
+                    <th scope="col">{user.role === 'default' ? 'Ajudante' : 'Usuário'}</th>
                     <th scope="col">Criado</th>
                     <th scope="col">Atualizado</th>
                     <th scope="col">Status</th>
@@ -50,32 +51,50 @@ export default function MeusTickets({ tickets, meta, user }) {
                 </thead>
                 <tbody>
                   {tickets.map((r, i) => {
+                    r.username = user.role === 'default' ? r.helper?.full_name : r.creator?.full_name
+
                     return (
                       <tr key={1 + i}>
-                        {/* Avatar */}
-                        <th scope="row">
+                        <th scope="row" data-label="Assunto">
                           <Media className="align-items-center">
-                            <Link
-                              href={`/tickets/${r.id}`}
-                              onClick={e => e.preventDefault()}
+                            <a
+                              className="avatar avatar-sm mr-3"
+                              href="#"
+                              id={`tooltip${1 + i}`}
+                              onClick={(e) => e.preventDefault()}
                             >
-                              <a>
-                                <span style={{ cursor: 'pointer' }} className="mb-0 text-sm">
-                                  {r.subject}
-                                </span>
-                              </a>
-                            </Link>
+                              <img
+                                alt="..."
+                                className="rounded-circle"
+                                src={`https://avatars.dicebear.com/v2/initials/${r.username || ''}.svg`}
+                              />
+                            </a>
+                            <UncontrolledTooltip
+                              delay={0}
+                              target={`tooltip${1 + i}`}
+                            >
+                              {r.username || 'nenhum'}
+                            </UncontrolledTooltip>
+                            <Media>
+                              <Link
+                                href={`/tickets/${r.id}`}
+                                onClick={e => e.preventDefault()}
+                              >
+                                <a>
+                                  <span style={{ cursor: 'pointer' }} className="mb-0 text-sm">
+                                    {r.subject}
+                                  </span>
+                                </a>
+                              </Link>
+                            </Media>
                           </Media>
                         </th>
+
                         {/* Content */}
-                        <td data-label="Ajudante"> {r.helper?.full_name || 'nenhum'}</td>
+                        <td data-label={user.role === 'default' ? 'Ajudante' : 'Usuário'}>{r.username || 'nenhum'}</td>
                         <td data-label="Criado">{displayDate(r?.created_at)}</td>
                         <td data-label="Atualizado">{displayDate(r?.updated_at)}</td>
                         <td data-label="Status">
-                          {/* <span className="badge badge-dot mr-4">
-                            <i className={`bg-${colorMap[r.status]}`} />
-                            {r?.status || 'indefinido'}
-                          </span> */}
                           <Badge color={colorMap[r.status]} className="badge mr-4">
                             {r?.status || 'indefinido'}
                           </Badge>
@@ -163,7 +182,9 @@ export async function getServerSideProps(ctx) {
   const user = await checkAuth(ctx)
 
   const apiClient = getAPIClient(ctx)
-  const { data } = await apiClient.get(`/users/@me/tickets?page=${ctx.query.page || 1}`).catch(() => [])
+  const { data } = await apiClient.get(
+    `${user?.role === 'default' ? '/users/@me/tickets' : '/tickets'}?page=${ctx.query.page || 1}`
+  ).catch(() => [])
 
 
   if (!user) return {

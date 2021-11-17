@@ -50,15 +50,17 @@ hr {
     /* margin-bottom: 16px; */
   }
 
-  tr:not(.detail):not(.is-empty):not(.table-footer) td:before {
+  tr:not(.detail):not(.is-empty):not(.table-footer) td:before,
+  tr:not(.detail):not(.is-empty):not(.table-footer) th:before {
     content: attr(data-label);
     font-weight: 600;
     padding-right: .5rem;
     text-align: left;
   }
 
-  td {
+  td, th {
     display: flex !important;
-    justify-content: space-between
+    justify-content: space-between;
+    align-items: center;
   }
 }

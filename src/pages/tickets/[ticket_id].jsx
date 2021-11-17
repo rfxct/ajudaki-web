@@ -1,5 +1,6 @@
 import 'react-toastify/dist/ReactToastify.css'
 
+
 import Image from 'next/image'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -45,11 +46,12 @@ export default function Ticket({ user, ticket }) {
       <Container className="pb-8 pt-5 pt-md-8" fluid>
         <ToastContainer />
         <h1>{ticket?.subject || 'Ticket não encontrado'}</h1>
+
         {ticket && (
-          <Row>
-            <Col xs={8}>
+          <section className="ticket-container">
+            <Col sm={12} md={12} lg={8}>
               <hr />
-              <Card className="mb-2">
+              <Card className="w-100 mb-2">
                 <CardBody>
                   <Row className="mb-4">
                     <Col xs='auto'>
@@ -81,7 +83,7 @@ export default function Ticket({ user, ticket }) {
 
               {messages?.sort((a, b) => a.created_at - b.created_at)?.map((topic, i) => {
                 return (
-                  <Card className="mb-2" key={i}>
+                  <Card className="w-100 mb-2" key={i}>
                     <CardBody>
                       <Row className="mb-4">
                         <Col xs='auto'>
@@ -136,9 +138,11 @@ export default function Ticket({ user, ticket }) {
                 </Button>
               </form>
             </Col>
-            <Col xs={4}>
+
+            {/* Informações */}
+            <Col sm={12} md={12} lg={4}>
               <hr style={{ visibility: 'hidden' }} />
-              <Card className="mb-2">
+              <Card className="w-100 mb-2">
                 <CardBody>
                   <div className="mb-3">
                     <h4>Solicitante</h4>
@@ -155,7 +159,7 @@ export default function Ticket({ user, ticket }) {
                 </CardBody>
               </Card>
             </Col>
-          </Row>
+          </section>
         )}
       </Container>
     </Dashboard>

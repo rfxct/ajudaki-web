@@ -19,12 +19,12 @@ import {
   UncontrolledTooltip
 } from 'reactstrap';
 
-import Dashboard from '../../layouts/Dashboard'
-import checkAuth from '../../util/CheckAuth'
-import { colorMap } from '../../util/StatusColor'
-import { displayDate } from '../../util/DateUtil'
+import Dashboard from '../../../layouts/Dashboard'
+import checkAuth from '../../../util/CheckAuth'
+import { colorMap } from '../../../util/StatusColor'
+import { displayDate } from '../../../util/DateUtil'
 
-import { getAPIClient } from '../../services/axios'
+import { getAPIClient } from '../../../services/axios'
 
 export default function MeusTickets({ tickets, meta, user }) {
   return (

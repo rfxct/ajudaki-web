@@ -62,7 +62,7 @@ function AdminNavbar({ brandText, user }) {
                   </a>
                 </Link>
                 <DropdownItem divider />
-                <DropdownItem href="#" onClick={(e) => e.preventDefault()}>
+                <DropdownItem href="/logout">
                   <FaSignOutAlt />
                   <span>Logout</span>
                 </DropdownItem>

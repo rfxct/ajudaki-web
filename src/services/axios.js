@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { parseCookies } from 'nookies'
+import { parseCookies, destroyCookie } from 'nookies'
 
 export function getAPIClient(ctx) {
   const { 'nextauth.token': token } = parseCookies(ctx)
@@ -8,8 +8,14 @@ export function getAPIClient(ctx) {
     baseURL: 'http://marc.rdp.fxck.cf:3333/api' // 'http://localhost:3333/api'
   })
 
-  api.interceptors.request.use(config => {
-    return config
+  api.interceptors.request.use(config => config)
+
+  api.interceptors.response.use(response => response, error => {
+    if (error.response.status === 401) {
+      destroyCookie(undefined, 'nextauth.token')
+    }
+
+    return Promise.reject(error)
   })
 
   if (token) {

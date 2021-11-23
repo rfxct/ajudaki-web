@@ -1,4 +1,4 @@
-import { FaTicketAlt, FaPlusSquare } from 'react-icons/fa'
+import { FaTicketAlt, FaPlusSquare, FaSpinner } from 'react-icons/fa'
 
 const Route = class {
   constructor(data) {
@@ -13,32 +13,17 @@ const Route = class {
   }
 }
 
-export default [
-  {
-    path: "/novo",
-    name: "Criar Ticket",
-    icon: <FaPlusSquare />,
-    layout: "/tickets",
-  },
-  {
-    path: "/@me",
-    name: "Meus tickets",
-    icon: <FaTicketAlt />,
-    layout: "/tickets",
-  }
-].map(data => new Route(data))
-
 const helper = [
   {
-    path: "/novo",
-    name: "Criar Ticket",
-    icon: <FaPlusSquare />,
-    layout: "/tickets",
-  },
-  {
     path: "/@me",
     name: "Meus tickets",
     icon: <FaTicketAlt />,
+    layout: "/tickets",
+  },
+  {
+    path: "/@me/pendentes",
+    name: "Pendentes",
+    icon: <FaSpinner />,
     layout: "/tickets",
   }
 ]
@@ -47,7 +32,7 @@ const admin = [
   ...helper
 ]
 
-const x = {
+const routes = {
   admin,
   helper,
   default: [
@@ -63,5 +48,11 @@ const x = {
       icon: <FaTicketAlt />,
       layout: "/tickets",
     }
-  ],
+  ]
 }
+
+for (const [type, values] of Object.entries(routes)) {
+  routes[type] = values.map(data => new Route(data))
+}
+
+export default routes

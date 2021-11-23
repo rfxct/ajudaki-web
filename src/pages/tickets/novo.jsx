@@ -105,6 +105,7 @@ export default function NovoTicket({ user }) {
 
 export async function getServerSideProps(ctx) {
   const user = await checkAuth(ctx)
+  
   if (!user || user.role !== 'default') return {
     redirect: {
       destination: '/login',

@@ -21,7 +21,7 @@ import {
 
 import routes from '../routes'
 
-export default function SidebarComponent({ logo }) {
+export default function SidebarComponent({ user, logo }) {
   const router = useRouter()
   const [collapsed, setCollapsed] = useState(false)
 
@@ -29,7 +29,7 @@ export default function SidebarComponent({ logo }) {
   const toggleCollapsed = () => setCollapsed(!collapsed)
 
   function isActive(route) {
-    return router.route.includes(route.fullPath)
+    return route.fullPath === router.route
   }
 
   return (
@@ -77,9 +77,10 @@ export default function SidebarComponent({ logo }) {
               </Col>
             </Row>
           </div>
-          {/* Navigation */}
+          {/* Heading */}
+          <h6 className="navbar-heading text-muted">Tickets</h6>
           <Nav navbar>
-            {routes.map((route, key) => (
+            {routes[user?.role || 'default']?.map((route, key) => (
               <NavItem key={key} active={isActive(route)}>
                 <Link href={isActive(route) ? '#' : route.fullPath}>
                   <NavLink
@@ -94,19 +95,7 @@ export default function SidebarComponent({ logo }) {
                   </NavLink>
                 </Link>
               </NavItem>
-            ))}</Nav>
-          {/* Divider */}
-          <hr className="my-3" />
-          {/* Heading */}
-          <h6 className="navbar-heading text-muted">Sub menu</h6>
-          {/* Navigation */}
-          <Nav className="mb-md-3" navbar>
-            <NavItem>
-              <NavLink href="#">
-                <i className="ni ni-spaceship" />
-                menu 1
-              </NavLink>
-            </NavItem>
+            ))}
           </Nav>
         </Collapse>
       </Container>

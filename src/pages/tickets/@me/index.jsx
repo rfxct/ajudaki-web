@@ -181,12 +181,6 @@ export default function MeusTickets({ tickets, meta, user }) {
 export async function getServerSideProps(ctx) {
   const user = await checkAuth(ctx)
 
-  const apiClient = getAPIClient(ctx)
-  const { data } = await apiClient.get(
-    `${user?.role === 'default' ? '/users/@me/tickets' : '/tickets'}?page=${ctx.query.page || 1}`
-  ).catch(() => [])
-
-
   if (!user) return {
     redirect: {
       destination: '/login',
@@ -194,6 +188,11 @@ export async function getServerSideProps(ctx) {
     },
     props: {}
   }
+
+  const apiClient = getAPIClient(ctx)
+  const { data } = await apiClient.get(
+    `/users/@me/tickets${user?.role === 'default' ? '' : '/assigned'}?page=${ctx.query.page || 1}`
+  ).catch(() => [])
 
   return { props: { user, tickets: data.data, meta: data.meta } }
 }

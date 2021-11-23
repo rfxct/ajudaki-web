@@ -34,8 +34,8 @@ export default function Ticket({ user, ticket }) {
       setMessages([...messages, data])
       reset({ keepDirty: false })
     } catch (e) {
-      console.log(e)
-      toast.error('Preencha os campos corretamente')
+      if (e.response.status === 403) return toast.error('Você precisa aceitar o ticket para respondê-lo')
+      toast.error('Ocorreu um erro ao responder o ticket')
     }
 
     setLoading(false)
@@ -115,28 +115,30 @@ export default function Ticket({ user, ticket }) {
                 )
               })}
 
-              <form onSubmit={handleSubmit(onSubmit, handleErrors)}>
-                <FormGroup>
-                  <label htmlFor="content-input">Responder</label>
-                  <textarea
-                    className='form-control'
-                    {...register('content', { required: 'A resposta não pode estar vazia' })}
-                    placeholder='Escreva sua resposta'
-                    rows='3'
-                    id="content-input"
-                    disabled={loading}
-                    required={true}
-                  />
-                </FormGroup>
+              {ticket.assigned_to === user.id && (
+                <form onSubmit={handleSubmit(onSubmit, handleErrors)}>
+                  <FormGroup>
+                    <label htmlFor="content-input">Responder</label>
+                    <textarea
+                      className='form-control'
+                      {...register('content', { required: 'A resposta não pode estar vazia' })}
+                      placeholder='Escreva sua resposta'
+                      rows='3'
+                      id="content-input"
+                      disabled={loading}
+                      required={true}
+                    />
+                  </FormGroup>
 
-                <Button
-                  className="float-right"
-                  color="primary"
-                  type="submit"
-                >
-                  Enviar
-                </Button>
-              </form>
+                  <Button
+                    className="float-right"
+                    color="primary"
+                    type="submit"
+                  >
+                    Enviar
+                  </Button>
+                </form>
+              )}
             </Col>
 
             {/* Informações */}
@@ -170,9 +172,6 @@ export default function Ticket({ user, ticket }) {
 export async function getServerSideProps(ctx) {
   const user = await checkAuth(ctx)
 
-  const apiClient = getAPIClient(ctx)
-  const { data } = await apiClient.get(`/tickets/${ctx.query.ticket_id}`).catch(() => [])
-
   if (!user) return {
     redirect: {
       destination: '/login',
@@ -181,5 +180,8 @@ export async function getServerSideProps(ctx) {
     props: {}
   }
 
+  const apiClient = getAPIClient(ctx)
+  const { data } = await apiClient.get(`/tickets/${ctx.query.ticket_id}`).catch(() => [])
+  console.log(data)
   return { props: { user, ticket: data ?? {} } }
 }

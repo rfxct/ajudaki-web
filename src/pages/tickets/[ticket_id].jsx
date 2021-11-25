@@ -18,7 +18,7 @@ export default function Ticket({ user, ticket }) {
   const [loading, setLoading] = useState(false)
   const [messages, setMessages] = useState(orderByDate(ticket.messages))
   const { register, reset, handleSubmit, formState: { errors } } = useForm()
-  
+
   function handleErrors() {
     for (const type in errors) {
       toast.error(errors[type].message)
@@ -162,6 +162,14 @@ export default function Ticket({ user, ticket }) {
                     <h4>Atualizado em</h4>
                     <span>{displayDate(messages.pop()?.created_at || ticket?.created_at)}</span>
                   </div>
+                  <div className="mb-3">
+                    {
+                      ticket.assigned_to === user.id
+                        ? <Button color="danger">Finalizar ticket</Button>
+                        : <Button color="success">Aceitar ticket</Button>
+                    }
+
+                  </div>
                 </CardBody>
               </Card>
             </Col>
@@ -185,6 +193,6 @@ export async function getServerSideProps(ctx) {
 
   const apiClient = getAPIClient(ctx)
   const { data } = await apiClient.get(`/tickets/${ctx.query.ticket_id}`).catch(() => [])
-  
+
   return { props: { user, ticket: data ?? {} } }
 }

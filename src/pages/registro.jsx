@@ -1,12 +1,11 @@
 import 'react-toastify/dist/ReactToastify.css'
 
-import Link from 'next/link'
-
 import { useState, useContext } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { ToastContainer, toast } from 'react-toastify'
-import { FaEnvelope, FaLock } from 'react-icons/fa'
+import { FaEnvelope, FaLock, FaUserAlt } from 'react-icons/fa'
+
 import {
   Button,
   Container,
@@ -26,10 +25,10 @@ import { AuthContext } from '../contexts/auth'
 
 import checkAuth from '../util/CheckAuth'
 
-export default function Login() {
+export default function Registro() {
   const [loading, setLoading] = useState(false)
   const { register, handleSubmit, formState: { errors } } = useForm()
-  const { signIn } = useContext(AuthContext)
+  const { registerAccount } = useContext(AuthContext)
 
   function handleErrors() {
     for (const type in errors) {
@@ -37,11 +36,13 @@ export default function Login() {
     }
   }
 
-  async function onSubmit({ email, password }) {
+  async function onSubmit(credentials) {
     setLoading(true)
 
-    const result = await signIn({ email, password })
-    if (result) toast.error(result)
+    const result = await registerAccount(credentials)
+    if (result?.length) {
+      for (const e of result) toast.error(e.message)
+    }
 
     setLoading(false)
   }
@@ -58,11 +59,50 @@ export default function Login() {
                   <Brand />
                 </div>
                 <div className='text-muted text-center mt-2 mb-3'>
-                  <small>Conecte-se</small>
+                  <small>Registre-se</small>
                 </div>
               </CardHeader>
               <CardBody className='px-lg-5 py-lg-5'>
                 <form onSubmit={handleSubmit(onSubmit, handleErrors)}>
+                  {/* Nome */}
+                  <FormGroup className='mb-3'>
+                    <InputGroup className='input-group-alternative'>
+                      <InputGroupAddon addonType='prepend'>
+                        <InputGroupText>
+                          <FaUserAlt />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <input
+                        className="form-control"
+                        {...register('first_name', { required: 'O nome não pode estar vazio' })}
+                        placeholder='Nome'
+                        type="text"
+                        id="first_name-input"
+                        disabled={loading}
+                        required={true}
+                      />
+                    </InputGroup>
+                  </FormGroup>
+                  {/* Sobrenome */}
+                  <FormGroup className='mb-3'>
+                    <InputGroup className='input-group-alternative'>
+                      <InputGroupAddon addonType='prepend'>
+                        <InputGroupText>
+                          <FaUserAlt />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <input
+                        className="form-control"
+                        {...register('last_name', { required: 'O sobrenome não pode estar vazio' })}
+                        placeholder='Sobrenome'
+                        type="text"
+                        id="last_name-input"
+                        disabled={loading}
+                        required={true}
+                      />
+                    </InputGroup>
+                  </FormGroup>
+                  {/* Email */}
                   <FormGroup className='mb-3'>
                     <InputGroup className='input-group-alternative'>
                       <InputGroupAddon addonType='prepend'>
@@ -73,7 +113,7 @@ export default function Login() {
                       <input
                         className="form-control"
                         {...register('email', { required: 'O e-mail não pode estar vazio' })}
-                        placeholder='seunome@domínio.tld'
+                        placeholder='Email'
                         type="email"
                         id="email-input"
                         disabled={loading}
@@ -81,6 +121,7 @@ export default function Login() {
                       />
                     </InputGroup>
                   </FormGroup>
+                  {/* Senha */}
                   <FormGroup>
                     <InputGroup className='input-group-alternative'>
                       <InputGroupAddon addonType='prepend'>
@@ -91,7 +132,7 @@ export default function Login() {
                       <input
                         className="form-control"
                         {...register('password', { required: 'A senha não pode estar vazia' })}
-                        placeholder='*************'
+                        placeholder='Senha'
                         id='password-input'
                         type="password"
                         disabled={loading}
@@ -99,24 +140,37 @@ export default function Login() {
                       />
                     </InputGroup>
                   </FormGroup>
+                  {/* Confirmar senha */}
+                  <FormGroup>
+                    <InputGroup className='input-group-alternative'>
+                      <InputGroupAddon addonType='prepend'>
+                        <InputGroupText>
+                          <FaLock />
+                        </InputGroupText>
+                      </InputGroupAddon>
+                      <input
+                        className="form-control"
+                        {...register('password_confirmation', { required: 'A confirmação de senha não pode estar vazia' })}
+                        placeholder='Confirme a senha'
+                        id='password_confirmation-input'
+                        type="password"
+                        disabled={loading}
+                        required={true}
+                      />
+                    </InputGroup>
+                  </FormGroup>
+                  {/* Enviar */}
                   <div className='text-center'>
                     <Button
                       type="submit" disabled={loading}
                       className='my-4' color='primary'
                     >
-                      Conectar
+                      Cadastrar
                     </Button>
                   </div>
                 </form>
               </CardBody>
             </Card>
-            <Col className="text-center" xs="12">
-              <Link href="/registro">
-                <a className="text-light">
-                  <small>Não tem uma conta? Crie agora!</small>
-                </a>
-              </Link>
-            </Col>
           </Col>
         </Row>
       </Container>

@@ -194,5 +194,13 @@ export async function getServerSideProps(ctx) {
     `/users/@me/tickets${user?.role === 'default' ? '' : '/assigned'}?page=${ctx.query.page || 1}`
   ).catch(() => [])
 
+  if (user?.role === 'default' && data?.meta?.total < 1) return {
+    redirect: {
+      destination: '/tickets/novo',
+      permanent: false,
+    },
+    props: {}
+  }
+
   return { props: { user, tickets: data.data, meta: data.meta } }
 }

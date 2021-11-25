@@ -64,3 +64,18 @@ hr {
     align-items: center;
   }
 }
+
+/* Tickets */
+@media(max-width: 1090px) {
+  .ticket-container {
+    display: flex;
+    flex-direction: column-reverse!important;
+  }
+}
+
+@media(min-width: 1090px) {
+  .ticket-container {
+    display: flex;
+    flex-direction: row!important;
+  }
+}

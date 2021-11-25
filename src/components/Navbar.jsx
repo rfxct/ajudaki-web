@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from 'next/image';
-import { FaTicketAlt, FaUser, FaSignOutAlt } from 'react-icons/fa'
+import { FaTicketAlt, FaSignOutAlt } from 'react-icons/fa'
 
 import {
   DropdownMenu,
@@ -45,14 +45,6 @@ function AdminNavbar({ brandText, user }) {
                 </Media>
               </DropdownToggle>
               <DropdownMenu className="dropdown-menu-arrow" right>
-                <Link href="/perfil/@me">
-                  <a>
-                    <DropdownItem>
-                      <FaUser />
-                      <span>Meu perfil</span>
-                    </DropdownItem>
-                  </a>
-                </Link>
                 <Link href="/tickets/@me">
                   <a>
                     <DropdownItem>
@@ -64,7 +56,7 @@ function AdminNavbar({ brandText, user }) {
                 <DropdownItem divider />
                 <DropdownItem href="/logout">
                   <FaSignOutAlt />
-                  <span>Logout</span>
+                  <span>Sair</span>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

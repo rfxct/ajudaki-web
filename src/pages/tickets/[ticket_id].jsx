@@ -16,13 +16,17 @@ import { getAPIClient } from '../../services/axios'
 
 export default function Ticket({ user, ticket }) {
   const [loading, setLoading] = useState(false)
-  const [messages, setMessages] = useState(ticket.messages)
+  const [messages, setMessages] = useState(orderByDate(ticket.messages))
   const { register, reset, handleSubmit, formState: { errors } } = useForm()
-
+  
   function handleErrors() {
     for (const type in errors) {
       toast.error(errors[type].message)
     }
+  }
+
+  function orderByDate(data) {
+    return data?.sort((a, b) => a.created_at - b.created_at)
   }
 
   async function onSubmit({ content }) {
@@ -31,7 +35,7 @@ export default function Ticket({ user, ticket }) {
     try {
       const { data } = await api.post(`tickets/${ticket.id}/messages`, { content })
       toast.success('Resposta enviada com sucesso')
-      setMessages([...messages, data])
+      setMessages(orderByDate([...messages, data]))
       reset({ keepDirty: false })
     } catch (e) {
       if (e.response.status === 403) return toast.error('Você precisa aceitar o ticket para respondê-lo')
@@ -156,7 +160,7 @@ export default function Ticket({ user, ticket }) {
                   </div>
                   <div className="mb-3">
                     <h4>Atualizado em</h4>
-                    <span>{displayDate(ticket.updated_at)}</span>
+                    <span>{displayDate(messages.pop()?.created_at || ticket?.created_at)}</span>
                   </div>
                 </CardBody>
               </Card>
@@ -167,7 +171,6 @@ export default function Ticket({ user, ticket }) {
     </Dashboard>
   )
 }
-
 
 export async function getServerSideProps(ctx) {
   const user = await checkAuth(ctx)
@@ -182,6 +185,6 @@ export async function getServerSideProps(ctx) {
 
   const apiClient = getAPIClient(ctx)
   const { data } = await apiClient.get(`/tickets/${ctx.query.ticket_id}`).catch(() => [])
-  console.log(data)
+  
   return { props: { user, ticket: data ?? {} } }
 }

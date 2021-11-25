@@ -1,9 +1,8 @@
 import { Fragment, useEffect } from 'react'
 import Head from 'next/head'
 
+import '../styles/fonts.css'
 import '../styles/global.css'
-import '../styles/nucleo/css/nucleo.css'
-import '../styles/tickets.css'
 import '../styles/argon.css'
 
 import { AuthProvider } from '../contexts/auth'

@@ -10,6 +10,16 @@ export async function signInRequest(credentials) {
   }
 }
 
+export async function registerRequest(credentials) {
+  try {
+    const { data } = await api.post('access/register', credentials)
+
+    return { success: true, data }
+  } catch (e) {
+    return { success: false, errors: e.response.data.errors }
+  }
+}
+
 export async function recoverUserInformation() {
   try {
     const { data } = await api.get('users/@me/profile')

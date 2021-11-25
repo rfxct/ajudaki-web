@@ -1,0 +1,127 @@
+/* OpenSans */
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 100;
+  src: url(/fonts/OpenSans/OpenSans-Thin.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 200;
+  src: url(/fonts/OpenSans/OpenSans-ExtraLight.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 300;
+  src: url(/fonts/OpenSans/OpenSans-Light.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 400;
+  src: url(/fonts/OpenSans/OpenSans-Regular.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 500;
+  src: url(/fonts/OpenSans/OpenSans-Medium.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 600;
+  src: url(/fonts/OpenSans/OpenSans-SemiBold.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 700;
+  src: url(/fonts/OpenSans/OpenSans-Bold.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 800;
+  src: url(/fonts/OpenSans/OpenSans-ExtraBold.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-weight: 900;
+  src: url(/fonts/OpenSans/OpenSans-Black.ttf);
+  font-display: swap;
+}
+
+/* Ubuntu */
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 100;
+  src: url(/fonts/Ubuntu/Ubuntu-Thin.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 200;
+  src: url(/fonts/Ubuntu/Ubuntu-ExtraLight.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 300;
+  src: url(/fonts/Ubuntu/Ubuntu-Light.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 400;
+  src: url(/fonts/Ubuntu/Ubuntu-Regular.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 500;
+  src: url(/fonts/Ubuntu/Ubuntu-Medium.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 600;
+  src: url(/fonts/Ubuntu/Ubuntu-SemiBold.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 700;
+  src: url(/fonts/Ubuntu/Ubuntu-Bold.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 800;
+  src: url(/fonts/Ubuntu/Ubuntu-ExtraBold.ttf);
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  font-weight: 900;
+  src: url(/fonts/Ubuntu/Ubuntu-Black.ttf);
+  font-display: swap;
+}

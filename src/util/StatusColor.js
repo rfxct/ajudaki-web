@@ -1,5 +1,5 @@
 export const colorMap = {
   'em curso': 'primary',
-  'resolvido': 'success',
+  'finalizado': 'dark',
   'pendente': 'warning'
 }

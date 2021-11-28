@@ -8,6 +8,6 @@ export const isDate = (value) => {
 }
 
 export const displayDate = (value) => {
-  const result = new Date(value)
+  const result = new Date(Date.parse(value))
   return isDate(value) ? Long.format(result) : '---'
 }

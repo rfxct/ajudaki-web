@@ -28,6 +28,13 @@ hr {
   min-height: 100vh;
 }
 
+.card-author {
+  border-left-width: 3px !important;
+  border-right-width: 0 !important;
+  border-top-width: 0 !important;
+  border-bottom-width: 0 !important;
+}
+
 @media screen and (min-width: 1281px) {
   .main-content {
     height: 100% !important;
@@ -69,13 +76,13 @@ hr {
 @media(max-width: 1090px) {
   .ticket-container {
     display: flex;
-    flex-direction: column-reverse!important;
+    flex-direction: column-reverse !important;
   }
 }
 
 @media(min-width: 1090px) {
   .ticket-container {
     display: flex;
-    flex-direction: row!important;
+    flex-direction: row !important;
   }
 }

@@ -28,9 +28,16 @@ hr {
   min-height: 100vh;
 }
 
-.card-author {
+.b-left {
   border-left-width: 3px !important;
   border-right-width: 0 !important;
+  border-top-width: 0 !important;
+  border-bottom-width: 0 !important;
+}
+
+.b-right {
+  border-left-width: 0 !important;
+  border-right-width: 3px !important;
   border-top-width: 0 !important;
   border-bottom-width: 0 !important;
 }

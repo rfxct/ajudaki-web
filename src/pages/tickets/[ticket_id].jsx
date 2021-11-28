@@ -76,7 +76,7 @@ export default function Ticket({ user, ticket: ssTicket, ticketMessages }) {
           <Col sm={12} md={12} lg={8}>
             <hr />
             <Card className={
-              `w-100 mb-2 ${ticket.created_by === user.id ? 'card-author border-primary' : ''}`
+              `w-100 mb-2 ${ticket.created_by === user.id ? 'b-left border-primary' : ''}`
             }>
               <CardBody>
                 <Row className="mb-4">
@@ -109,7 +109,7 @@ export default function Ticket({ user, ticket: ssTicket, ticketMessages }) {
 
             {messages.map((topic, i) => (
               <Card className={
-                `w-100 mb-2 ${topic.author_id === user.id ? 'card-author border-primary' : ''}`
+                `w-100 mb-2 ${topic.author_id === user.id ? 'b-left border-primary' : ''}`
               } key={i}>
                 <CardBody>
                   <Row className="mb-4">

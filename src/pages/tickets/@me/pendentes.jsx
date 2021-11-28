@@ -1,14 +1,11 @@
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import {
   Badge,
   Card,
   CardHeader,
   CardFooter,
-  DropdownMenu,
-  DropdownItem,
-  UncontrolledDropdown,
-  DropdownToggle,
   Media,
   Pagination,
   PaginationItem,
@@ -17,7 +14,7 @@ import {
   Container,
   Row,
   UncontrolledTooltip
-} from 'reactstrap';
+} from 'reactstrap'
 
 import Dashboard from '../../../layouts/Dashboard'
 import checkAuth from '../../../util/CheckAuth'
@@ -25,8 +22,11 @@ import { colorMap } from '../../../util/StatusColor'
 import { displayDate } from '../../../util/DateUtil'
 
 import { getAPIClient } from '../../../services/axios'
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 export default function MeusTickets({ tickets, meta, user }) {
+  const router = useRouter()
+
   return (
     <Dashboard user={user}>
       {/* Page content */}
@@ -46,7 +46,6 @@ export default function MeusTickets({ tickets, meta, user }) {
                     <th scope="col">Criado</th>
                     <th scope="col">Atualizado</th>
                     <th scope="col">Status</th>
-                    <th scope="col"></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -99,31 +98,6 @@ export default function MeusTickets({ tickets, meta, user }) {
                             {r?.status || 'indefinido'}
                           </Badge>
                         </td>
-                        <td className="text-right">
-                          <UncontrolledDropdown>
-                            <DropdownToggle
-                              className="btn-icon-only text-light"
-                              href="#"
-                              role="button"
-                              size="sm"
-                              color=""
-                              onClick={e => e.preventDefault()}
-                            >
-                              <i className="fas fa-ellipsis-v" />
-                            </DropdownToggle>
-                            <DropdownMenu className="dropdown-menu-arrow" right>
-                              <DropdownItem
-                                href="#"
-                                data-parent={r.id}
-                                onClick={e => {
-                                  //setTickets(tickets.filter(t => t.id != e.target.dataset.parent))
-                                }}
-                              >
-                                Encerrar atendimento
-                              </DropdownItem>
-                            </DropdownMenu>
-                          </UncontrolledDropdown>
-                        </td>
                       </tr>
                     )
                   })}
@@ -139,10 +113,10 @@ export default function MeusTickets({ tickets, meta, user }) {
                     {/* Anterior */}
                     <PaginationItem disabled={meta.current_page <= 1}>
                       <Link
-                        href={`/tickets/@me?page=${meta.current_page - 1}`}
+                        href={`${router.route}?page=${meta.current_page - 1}`}
                       >
                         <a className="page-link">
-                          <i className="fas fa-angle-left" />
+                          <FaAngleLeft />
                           <span className="sr-only">Anterior</span>
                         </a>
                       </Link>
@@ -159,10 +133,10 @@ export default function MeusTickets({ tickets, meta, user }) {
                     {/* Próximo */}
                     <PaginationItem disabled={meta.current_page >= meta.last_page}>
                       <Link
-                        href={`/tickets/@me?page=${meta.current_page + 1}`}
+                        href={`${router.route}?page=${meta.current_page + 1}`}
                       >
                         <a className="page-link">
-                          <i className="fas fa-angle-right" />
+                          <FaAngleRight />
                           <span className="sr-only">Próximo</span>
                         </a>
                       </Link>

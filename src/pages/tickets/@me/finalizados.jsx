@@ -14,9 +14,7 @@ import {
   Container,
   Row,
   UncontrolledTooltip
-} from 'reactstrap'
-
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
+} from 'reactstrap';
 
 import Dashboard from '../../../layouts/Dashboard'
 import checkAuth from '../../../util/CheckAuth'
@@ -24,10 +22,11 @@ import { colorMap } from '../../../util/StatusColor'
 import { displayDate } from '../../../util/DateUtil'
 
 import { getAPIClient } from '../../../services/axios'
+import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 export default function MeusTickets({ tickets, meta, user }) {
   const router = useRouter()
-  
+
   return (
     <Dashboard user={user}>
       {/* Page content */}
@@ -118,6 +117,7 @@ export default function MeusTickets({ tickets, meta, user }) {
                       >
                         <a className="page-link">
                           <FaAngleLeft />
+
                           <span className="sr-only">Anterior</span>
                         </a>
                       </Link>
@@ -156,7 +156,7 @@ export default function MeusTickets({ tickets, meta, user }) {
 export async function getServerSideProps(ctx) {
   const user = await checkAuth(ctx)
 
-  if (!user) return {
+  if (!user || user?.role === 'default') return {
     redirect: {
       destination: '/login',
       permanent: false,
@@ -166,16 +166,8 @@ export async function getServerSideProps(ctx) {
 
   const apiClient = getAPIClient(ctx)
   const { data } = await apiClient.get(
-    `/users/@me/tickets${user?.role === 'default' ? '' : '/assigned'}?page=${ctx.query.page || 1}`
+    `/tickets?page=${ctx.query.page || 1}`
   ).catch(() => [])
 
-  if (user?.role === 'default' && data?.meta?.total < 1) return {
-    redirect: {
-      destination: '/tickets/novo',
-      permanent: false,
-    },
-    props: {}
-  }
-
-  return { props: { user, tickets: data.data.filter(t => !t.finished), meta: data.meta } }
+  return { props: { user, tickets: data.data.filter(t => t.status === 'finalizado'), meta: data.meta } }
 }

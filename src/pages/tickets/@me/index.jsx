@@ -51,7 +51,7 @@ export default function MeusTickets({ tickets, meta, user }) {
                 </thead>
                 <tbody>
                   {tickets.map((r, i) => {
-                    r.username = user.role === 'default' ? r.helper?.full_name : r.creator?.full_name
+                    r.username = r[user.role === 'default' ? 'helper' : 'creator']?.full_name
 
                     return (
                       <tr key={1 + i}>

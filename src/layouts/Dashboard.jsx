@@ -7,7 +7,9 @@ import routes from '../routes.js'
 
 function Dashboard(props) {
   const router = useRouter()
-  const getBrandText = () => routes[props?.user?.role || 'default']?.find(r => r.layout + r.path === router.route)?.name ?? 'AjudAki'
+
+  const getBrandText = () =>
+    Object.values(routes[props.user.role])?.find(r => r.fullPath === router.route)?.name ?? 'AjudAki'
 
   return (
     <>

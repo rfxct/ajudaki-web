@@ -78,25 +78,33 @@ export default function SidebarComponent({ user, logo }) {
             </Row>
           </div>
           {/* Heading */}
-          <h6 className="navbar-heading text-muted">Tickets</h6>
-          <Nav navbar>
-            {routes[user?.role || 'default']?.map((route, key) => (
-              <NavItem key={key} active={isActive(route)}>
-                <Link href={isActive(route) ? '#' : route.fullPath}>
-                  <NavLink
-                    href={isActive(route) ? '#' : route.fullPath}
-                    active={isActive(route)}
-                    onClick={closeCollapse}
-                  >
-                    <NavItemIcon>
-                      {route.icon}
-                    </NavItemIcon>
-                    {route.name}
-                  </NavLink>
-                </Link>
-              </NavItem>
-            ))}
-          </Nav>
+          {Object.entries(routes[user?.role || 'default'])?.map(([categoryName, categoryRoutes], categoryKey) => (
+            <div key={categoryKey}>
+              <h6 className="navbar-heading text-muted">
+                {categoryName}
+              </h6>
+
+              <Nav navbar>
+                {categoryRoutes.map((route, routeKey) => (
+                    <NavItem key={routeKey} active={isActive(route)}>
+                      <Link href={isActive(route) ? '#' : route.fullPath}>
+                        <NavLink
+                          href={isActive(route) ? '#' : route.fullPath}
+                          active={isActive(route)}
+                          onClick={closeCollapse}
+                        >
+                          <NavItemIcon>
+                            {route.icon}
+                          </NavItemIcon>
+                          {route.name}
+                        </NavLink>
+                      </Link>
+                    </NavItem>
+                  )
+                )}
+              </Nav>
+            </div>
+          ))}
         </Collapse>
       </Container>
     </Navbar>

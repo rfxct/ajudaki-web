@@ -15,7 +15,7 @@ export default function Common(props) {
     mainContentRef.current.scrollTop = 0
   }, [])
 
-  const getBrandText = () => routes.find(r => r.layout + r.path === router.route)?.name ?? 'AjudAki'
+  const getBrandText = () => routes.find(r => r.fullPath === router.route)?.name ?? 'AjudAki'
 
   return (
     <div className='main-content' ref={mainContentRef}>

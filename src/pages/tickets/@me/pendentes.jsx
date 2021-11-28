@@ -95,7 +95,7 @@ export default function MeusTickets({ tickets, meta, user }) {
                         <td data-label="Criado">{displayDate(r?.created_at)}</td>
                         <td data-label="Atualizado">{displayDate(r?.updated_at)}</td>
                         <td data-label="Status">
-                          <Badge color={colorMap[r.status]} className="badge mr-4">
+                          <Badge color={colorMap[r.status]} className="mr-4">
                             {r?.status || 'indefinido'}
                           </Badge>
                         </td>

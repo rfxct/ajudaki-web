@@ -192,7 +192,7 @@ export default function Ticket({ user, ticket: ssTicket, ticketMessages }) {
                 </div>
                 <div className="mb-3">
                   {
-                    !ticket.finished && (
+                    (!ticket.finished && ticket.created_by !== user.id) && (
                       ticket.assigned_to === user.id
                         ? (
                           <Button color="danger" disabled={loading} onClick={() => handleTicket('finish')}>

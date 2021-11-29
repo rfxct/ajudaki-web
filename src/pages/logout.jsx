@@ -27,7 +27,7 @@ export async function getServerSideProps(ctx) {
   const apiClient = getAPIClient(ctx)
   await apiClient.post(`/access/logout`).catch(() => [])
   
-  destroyCookie(ctx, 'nextauth.token')
+  destroyCookie(ctx, 'auth.token')
   
   return {
     redirect: {

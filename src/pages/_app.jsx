@@ -1,6 +1,7 @@
 import { Fragment, useEffect } from 'react'
 import Head from 'next/head'
 
+import 'react-toastify/dist/ReactToastify.css'
 import '../styles/fonts.css'
 import '../styles/global.css'
 import '../styles/argon.css'

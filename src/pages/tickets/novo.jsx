@@ -1,5 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css'
-
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -16,7 +14,7 @@ import {
   Row,
   FormGroup,
   Button
-} from 'reactstrap';
+} from 'reactstrap'
 
 import checkAuth from '../../util/CheckAuth'
 
@@ -48,10 +46,8 @@ export default function NovoTicket({ user }) {
 
   return (
     <Dashboard user={user}>
-      {/* Page content */}
       <Container className="pb-8 pt-5 pt-md-8" fluid>
         <ToastContainer />
-        {/* Table */}
         <Row>
           <div className="col">
             <Card className="shadow">

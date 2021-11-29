@@ -1,5 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css'
-
 import { useState, useContext } from 'react'
 import { useForm } from 'react-hook-form'
 

@@ -24,14 +24,12 @@ import { displayDate } from '../../../util/DateUtil'
 import { getAPIClient } from '../../../services/axios'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
-export default function MeusTickets({ tickets, meta, user }) {
+export default function TicketsPendentes({ tickets, meta, user }) {
   const router = useRouter()
 
   return (
     <Dashboard user={user}>
-      {/* Page content */}
       <Container className="pb-8 pt-5 pt-md-8" fluid>
-        {/* Table */}
         <Row>
           <div className="col">
             <Card className="shadow">
@@ -51,7 +49,6 @@ export default function MeusTickets({ tickets, meta, user }) {
                 <tbody>
                   {tickets.map((r, i) => {
                     r.username = r[user.role === 'default' ? 'helper' : 'creator']?.full_name
-
                     return (
                       <tr key={1 + i}>
                         <th scope="row" data-label="Assunto">
@@ -89,7 +86,6 @@ export default function MeusTickets({ tickets, meta, user }) {
                           </Media>
                         </th>
 
-                        {/* Content */}
                         <td data-label={user.role === 'default' ? 'Ajudante' : 'Usuário'}>{r.username || 'nenhum'}</td>
                         <td data-label="Criado">{displayDate(r?.created_at)}</td>
                         <td data-label="Atualizado">{displayDate(r?.updated_at)}</td>

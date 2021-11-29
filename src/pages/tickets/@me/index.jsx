@@ -30,9 +30,7 @@ export default function MeusTickets({ tickets, meta, user }) {
   
   return (
     <Dashboard user={user}>
-      {/* Page content */}
       <Container className="pb-8 pt-5 pt-md-8" fluid>
-        {/* Table */}
         <Row>
           <div className="col">
             <Card className="shadow">
@@ -52,7 +50,6 @@ export default function MeusTickets({ tickets, meta, user }) {
                 <tbody>
                   {tickets.map((r, i) => {
                     r.username = r[user.role === 'default' ? 'helper' : 'creator']?.full_name
-
                     return (
                       <tr key={1 + i}>
                         <th scope="row" data-label="Assunto">

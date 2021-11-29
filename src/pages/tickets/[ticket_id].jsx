@@ -1,5 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css'
-
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'

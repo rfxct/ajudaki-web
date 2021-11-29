@@ -1,5 +1,3 @@
-import 'react-toastify/dist/ReactToastify.css'
-
 import Link from 'next/link'
 
 import { useState, useContext } from 'react'

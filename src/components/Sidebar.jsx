@@ -5,7 +5,6 @@ import { useRouter } from 'next/router'
 import Brand from '../components/Brand'
 
 import Link from 'next/link'
-import Image from 'next/image'
 
 import {
   Collapse,
@@ -39,7 +38,6 @@ export default function SidebarComponent({ user, logo }) {
       id="sidenav-main"
     >
       <Container fluid>
-        {/* Navbar Toggler */}
         <button
           className="navbar-toggler"
           type="button"
@@ -48,17 +46,14 @@ export default function SidebarComponent({ user, logo }) {
           <span className="navbar-toggler-icon" />
         </button>
 
-        {/* Sidebar Logo */}
         <NavbarBrand href="#" className="p-0">
           <Brand />
         </NavbarBrand>
 
         {/* Sidebar */}
         <Collapse navbar isOpen={collapsed}>
-          {/* Collapsed Header */}
           <div className="navbar-collapse-header d-md-none">
             <Row>
-              {/* Collapsed Logo */}
               <Col className="collapse-brand" xs="6">
                 <Link href="/">
                   <a><Brand /></a>

@@ -12,7 +12,7 @@ export function AuthProvider({ children }) {
   const isAuthenticated = !!user
 
   useEffect(() => {
-    const { 'nextauth.token': token } = parseCookies()
+    const { 'auth.token': token } = parseCookies()
 
     if (token) {
       recoverUserInformation().then(response => setUser(response.data))

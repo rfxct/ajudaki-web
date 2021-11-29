@@ -26,7 +26,7 @@ export function AuthProvider({ children }) {
 
     if (!result.success) return result?.message
 
-    setCookie(undefined, 'nextauth.token', result.data.token, {
+    setCookie(undefined, 'auth.token', result.data.token, {
       maxAge: 60 * 60 * 1, // 1 hour
     })
 

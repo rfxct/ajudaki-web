@@ -23,10 +23,15 @@ export default function Ticket({ user, ticket: ssTicket, ticketMessages }) {
     setTicket(ticket)
     setMessages(ticketMessages)
 
-    setInterval(() =>
+    setInterval(() => {
+      api.get(`/tickets/${ticket.id}`)
+        .then(({ data }) => setTicket(data))
+        .catch(() => [])
+
       api.get(`/tickets/${ticket.id}/messages`)
         .then(({ data }) => setMessages(data))
-        .catch(() => []), 8000)
+        .catch(() => [])
+    }, 8000)
   }, [])
 
   function handleErrors() {

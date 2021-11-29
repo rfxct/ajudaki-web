@@ -24,6 +24,11 @@ export default function Ticket({ user, ticket: ssTicket, ticketMessages }) {
   useEffect(() => {
     setTicket(ticket)
     setMessages(ticketMessages)
+
+    setInterval(() =>
+      api.get(`/tickets/${ticket.id}/messages`)
+        .then(({ data }) => setMessages(data))
+        .catch(() => []), 8000)
   }, [])
 
   function handleErrors() {
@@ -66,7 +71,7 @@ export default function Ticket({ user, ticket: ssTicket, ticketMessages }) {
   }
 
   return (
-    <Dashboard brandText={ticket.subject} user={user}>
+    <Dashboard brandText={`Ticket #${ticket.id}`} user={user}>
       <Container className="pb-8 pt-5 pt-md-8" fluid>
         <ToastContainer />
         <h1>{ticket?.subject || 'Ticket não encontrado'}</h1>

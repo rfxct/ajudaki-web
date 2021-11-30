@@ -27,7 +27,7 @@ import { getAPIClient } from '../../../services/axios'
 
 export default function MeusTickets({ tickets, meta, user }) {
   const router = useRouter()
-  
+
   return (
     <Dashboard user={user}>
       <Container className="pb-8 pt-5 pt-md-8" fluid>
@@ -174,5 +174,5 @@ export async function getServerSideProps(ctx) {
     props: {}
   }
 
-  return { props: { user, tickets: data.data.filter(t => !t.finished), meta: data.meta } }
+  return { props: { user, tickets: data.data.filter(t => user?.role === 'default' || !t.finished), meta: data.meta } }
 }

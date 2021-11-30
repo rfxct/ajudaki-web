@@ -19004,7 +19004,6 @@ pre>code.highlight {
 
 .color-swatch-header .pass-fail-item {
     float: left;
-    display: inline-block;
     text-align: center;
     padding: 2px
 }
@@ -19085,7 +19084,6 @@ pre>code.highlight {
     height: 40px;
     width: 40px;
     margin-right: 20px;
-    display: inline-block;
     border-radius: 4px;
     border: 1px solid transparent
 }
@@ -19098,7 +19096,6 @@ pre>code.highlight {
     float: left;
     margin: 5px 10px 0 0;
     font-size: 10px;
-    display: inline-block;
     text-transform: uppercase;
     font-weight: 600;
     background: #97A0AF;

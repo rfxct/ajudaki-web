@@ -43,7 +43,7 @@ export default function TicketsPendentes({ tickets, meta, user }) {
                     <th scope="col">Assunto</th>
                     <th scope="col">{user.role === 'default' ? 'Ajudante' : 'Usuário'}</th>
                     <th scope="col">Criado</th>
-                    <th scope="col">Atualizado</th>
+                    {/* <th scope="col">Atualizado</th> */}
                     <th scope="col">Status</th>
                   </tr>
                 </thead>
@@ -85,7 +85,6 @@ export default function TicketsPendentes({ tickets, meta, user }) {
 
                         <td data-label={user.role === 'default' ? 'Ajudante' : 'Usuário'}>{r.username || 'nenhum'}</td>
                         <td data-label="Criado">{displayDate(r?.created_at)}</td>
-                        <td data-label="Atualizado">{displayDate(r?.updated_at)}</td>
                         <td data-label="Status">
                           <Badge color={colorMap[r.status]} className="mr-4">
                             {r?.status || 'indefinido'}

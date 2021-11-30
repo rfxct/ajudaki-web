@@ -20,6 +20,7 @@ import Dashboard from '../../../layouts/Dashboard'
 import checkAuth from '../../../util/CheckAuth'
 import { colorMap } from '../../../util/StatusColor'
 import { displayDate } from '../../../util/DateUtil'
+import genAvatar from '../../../util/GenAvatar'
 
 import { getAPIClient } from '../../../services/axios'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
@@ -59,11 +60,7 @@ export default function TicketsFinalizados({ tickets, meta, user }) {
                               id={`tooltip${1 + i}`}
                               onClick={(e) => e.preventDefault()}
                             >
-                              <img
-                                alt="..."
-                                className="rounded-circle"
-                                src={`https://avatars.dicebear.com/v2/initials/${r.username || ''}.svg`}
-                              />
+                              {genAvatar(r?.username || '')}
                             </a>
                             <UncontrolledTooltip
                               delay={0}

@@ -1,6 +1,5 @@
 import React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { FaTicketAlt, FaSignOutAlt } from 'react-icons/fa'
 
 import {
@@ -13,6 +12,8 @@ import {
   Container,
   Media,
 } from 'reactstrap'
+
+import genAvatar from '../util/GenAvatar'
 
 function AdminNavbar({ brandText, user }) {
 
@@ -30,12 +31,7 @@ function AdminNavbar({ brandText, user }) {
               <DropdownToggle className="pr-0" nav>
                 <Media className="align-items-center">
                   <span className="avatar avatar-sm rounded-circle">
-                    <Image
-                      alt="..."
-                      src={`https://avatars.dicebear.com/v2/initials/${user?.full_name}.svg`}
-                      width="48px"
-                      height="48px"
-                    />
+                    {genAvatar(user?.full_name)}
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">

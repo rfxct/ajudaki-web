@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify'
@@ -9,6 +8,7 @@ import { api } from '../../services/api'
 
 import { displayDate } from '../../util/DateUtil'
 import { colorMap } from '../../util/StatusColor'
+import genAvatar from '../../util/GenAvatar'
 import checkAuth from '../../util/CheckAuth'
 import { getAPIClient } from '../../services/axios'
 
@@ -89,12 +89,7 @@ export default function Ticket({ user, ticket: ssTicket, ticketMessages }) {
               <CardBody>
                 <Row className="mb-4">
                   <Col xs='auto'>
-                    <Image
-                      className="rounded-circle"
-                      width="40px" height="40px"
-                      src={`https://avatars.dicebear.com/v2/initials/${ticket?.creator?.full_name || ''}.svg`}
-                      alt={`#description#${ticket?.creator?.full_name}`}
-                    />
+                    {genAvatar(ticket?.creator?.full_name)}
                   </Col>
                   {/* Topic Author info */}
                   <Col className='pl-0'>
@@ -122,12 +117,7 @@ export default function Ticket({ user, ticket: ssTicket, ticketMessages }) {
                 <CardBody>
                   <Row className="mb-4">
                     <Col xs='auto'>
-                      <Image
-                        className="rounded-circle"
-                        width="40px" height="40px"
-                        src={`https://avatars.dicebear.com/v2/initials/${topic?.author.full_name || ''}.svg`}
-                        alt={`#${i}#${topic?.author.full_name}`}
-                      />
+                      {genAvatar(topic?.author?.full_name)}
                     </Col>
                     {/* Topic Author info */}
                     <Col className='pl-0'>

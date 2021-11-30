@@ -67,6 +67,7 @@ export default function NovoTicket({ user }) {
                       id="subject-input"
                       disabled={loading}
                       required={true}
+                      autoComplete="off"
                     />
                   </FormGroup>
                   <FormGroup>
@@ -79,6 +80,7 @@ export default function NovoTicket({ user }) {
                       id="description-input"
                       disabled={loading}
                       required={true}
+                      autoComplete="off"
                     />
                   </FormGroup>
 

@@ -9,7 +9,7 @@ export default function genAvatar(full_name = '') {
 
   const prefixes = full_name.trim().split(/\s+/)
     .filter((_, i, a) => i === 0 || i === a.length - 1)
-    .map(s => s[0].toUpperCase())
+    .map(s => s[0]?.toUpperCase() || '')
     .join('')
 
   return (
